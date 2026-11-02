@@ -233,13 +233,11 @@
     .link.solid:hover { background: var(--c, var(--shield)); }
     .more-head { margin: 76px 0 24px; display: flex; justify-content: space-between; align-items: end; gap: 20px; flex-wrap: wrap; }
     .more-head h3 { font-family: var(--display); font-style: italic; font-weight: 800; font-size: 2.4rem; line-height: 1; text-transform: uppercase; }
-    .filters { display: flex; gap: 6px; flex-wrap: wrap; }
-    .filter { font-family: var(--hud); font-weight: 600; font-size: .78rem; letter-spacing: .4px; text-transform: uppercase; padding: 8px 18px; background: var(--card); color: var(--muted); clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%); }
-    .filter:hover { color: var(--text); }
-    .filter[aria-pressed="true"] { background: var(--text); color: var(--bg); }
-    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-    @media (max-width: 1000px) { .grid { grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
+    .grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 18px; }
+    .grid .card { grid-column: span 3; }
+    .grid .card:nth-child(n+3):nth-child(-n+5) { grid-column: span 2; }
+    @media (max-width: 1000px) { .grid { grid-template-columns: 1fr 1fr; } .grid .card, .grid .card:nth-child(n+3):nth-child(-n+5) { grid-column: span 1; } .grid .card:first-child { grid-column: span 2; } }
+    @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } .grid .card:first-child { grid-column: span 1; } }
     .card { --k: 18px; text-align: left; background: var(--card); display: flex; flex-direction: column; position: relative; transition: transform .2s, background .2s; animation: feedin .35s both; }
     .card:hover { transform: translateY(-5px); background: var(--card-2); }
     .card-visual { aspect-ratio: 16/10.5; display: grid; place-items: center; padding: 18px; background: linear-gradient(150deg, color-mix(in srgb, var(--c) 38%, var(--card-2)), var(--card-2) 66%); overflow: hidden; position: relative; }
@@ -387,8 +385,11 @@
     dialog::backdrop { background: rgba(0,0,0,.78); }
     dialog[open] { animation: feedin .22s ease-out; }
     .m-visual { aspect-ratio: 16/10; display: grid; place-items: center; padding: 22px; background: linear-gradient(150deg, color-mix(in srgb, var(--c) 38%, var(--card-2)), var(--card-2) 66%); position: relative; overflow: hidden; }
-    .card-visual img, .feat-visual img { object-position: top; }
-    .card-visual img.whole { inset: 16px; width: calc(100% - 32px); height: calc(100% - 32px); object-fit: contain; object-position: center; }
+    .feat-visual img { object-position: top; }
+    .card-visual img { object-position: left top; }
+    .card-visual img { inset: 18px 18px 0; width: calc(100% - 36px); height: calc(100% - 18px); border: 1px solid var(--line); border-bottom: 0; filter: brightness(.8); transition: filter .2s; }
+    .card:hover .card-visual img { filter: none; }
+    .grid .card:nth-child(-n+2) .card-visual, .grid .card:nth-child(n+6) .card-visual { aspect-ratio: 16/8.6; }
     .feat-visual { position: relative; }
     .feat-visual img { display: block; width: 100%; height: auto; border: 1px solid #34343e; box-shadow: 0 30px 60px -24px rgba(0,0,0,.95); transition: transform .3s; }
     .feat-visual:has(.shots) { align-content: center; gap: 16px; }
@@ -502,7 +503,6 @@
     <div class="featured" id="featured"></div>
     <div class="more-head reveal">
       <h3 data-t="work.more"></h3>
-      <div class="filters" id="filters" role="group" aria-label="Filtrar proyectos"></div>
     </div>
     <div class="grid" id="grid"></div>
   </div>
@@ -636,20 +636,13 @@ const PERFIL = {
   cv: "",                                  // ← ej: "cv-abraham-gonzalez.pdf" (vacío = no se muestra)
 };
 
-// Colores por categoría (como la referencia: cada tipo de trabajo tiene su color)
-const CATEGORIAS = {
-  prod: { color: "var(--teal)",  es: "En producción",      en: "In production" },
-  oss:  { color: "var(--coral)", es: "Open source",        en: "Open source" },
-  ai:   { color: "var(--amber)", es: "IA y automatización", en: "AI & automation" },
-  web:  { color: "var(--lime)",  es: "Web y apps",         en: "Web & apps" },
-};
 
 // destacado: true → se muestra en grande arriba.
 // mock: dibujo de la tarjeta. Si pones imagenes: ["img/a.webp", "img/b.webp"] se usan las capturas:
 // la primera es la portada y todas aparecen en la galería del detalle.
 const PROYECTOS = [
   {
-    id: "getpack", cat: "prod", destacado: true, favorito: true, mock: "getpack",
+    id: "getpack", destacado: true, favorito: true, mock: "getpack",
     imagenes: ["img/getpack-1-tienda.webp", "img/getpack-2-como-funciona.webp", "img/getpack-3-tarifas.webp", "img/getpack-4-producto.webp", "img/getpack-5-producto-2.webp", "img/getpack-6-checkout.webp"],
     mosaico: ["img/getpack-5-producto-2.webp", "img/getpack-4-producto.webp", "img/getpack-6-checkout.webp"], // pantallas de celular bajo la portada
     apps: [
@@ -672,7 +665,7 @@ const PROYECTOS = [
     links: [{ es: "Código y caso completo", en: "Code & write-up", url: "https://github.com/Clizco/admin-get" }, { es: "Portal de comercios", en: "Merchant portal", url: "https://comercial.getpack.net/" }],
   },
   {
-    id: "koli", cat: "prod", destacado: true, mock: "koli",
+    id: "koli", destacado: true, mock: "koli",
     imagenes: ["img/koli-1-vehiculos.webp", "img/koli-2-entradas-salidas.webp", "img/koli-3-kilometrajes.webp"],
     mosaico: ["img/koli-2-entradas-salidas.webp", "img/koli-3-kilometrajes.webp"], mosaicoAncho: true, // pantallas de escritorio bajo la portada
     titulo: "Koli",
@@ -689,9 +682,10 @@ const PROYECTOS = [
     links: [{ es: "Backend", en: "Backend", url: "https://github.com/Clizco/garage-backend" }, { es: "Frontend", en: "Frontend", url: "https://github.com/Clizco/garage-frontend" }],
   },
   {
-    id: "davinci", cat: "prod", mock: "davinci", portadaEntera: true,
+    id: "davinci", mock: "davinci",
     imagenes: ["img/davinci-1-analisis-ia.webp"],
     titulo: "Davinci",
+    corto: { es: "Activos con permisos detallados y análisis de fotos con IA.", en: "Assets with detailed permissions and AI photo analysis." },
     estado: { es: "Cliente privado", en: "Private client" },
     resumen: {
       es: "Sistema de gestión para una colección de arte y activos, con permisos detallados y funciones con IA.",
@@ -705,8 +699,9 @@ const PROYECTOS = [
     links: [],
   },
   {
-    id: "piyo", cat: "ai", mock: "factura", imagenes: ["img/piyo-2-escaneo-ia.webp", "img/piyo-1-panel.webp"],
+    id: "piyo", mock: "factura", imagenes: ["img/piyo-2-escaneo-ia.webp", "img/piyo-1-panel.webp"],
     titulo: "Piyo",
+    corto: { es: "Extrae los datos de cada factura con OCR y OpenAI.", en: "Extracts the data from every invoice with OCR and OpenAI." },
     estado: { es: "Facturas y cuentas con IA", en: "AI invoices & accounts" },
     resumen: {
       es: "Sistema de gestión de cuentas con IA que construí para automatizar el procesamiento de facturas: a partir de la factura o una foto, extrae el proveedor, los montos, las fechas y los conceptos, con menos trabajo manual y menos errores de captura.",
@@ -720,8 +715,9 @@ const PROYECTOS = [
     links: [],
   },
   {
-    id: "audit", cat: "oss", mock: "audit", imagen: "",
+    id: "audit", mock: "audit", imagen: "",
     titulo: "express-audit-trail",
+    corto: { es: "Registra quién cambió qué, cuándo y desde dónde en tu API.", en: "Logs who changed what, when and from where in your API." },
     estado: { es: "Paquete npm", en: "npm package" },
     resumen: {
       es: "Middleware de auditoría para Express: registra quién creó, editó o borró qué, cuándo y desde dónde. Extraído de la plataforma Koli en producción.",
@@ -735,8 +731,9 @@ const PROYECTOS = [
     links: [{ es: "npm", en: "npm", url: "https://www.npmjs.com/package/express-audit-trail" }, { es: "Código", en: "Code", url: "https://github.com/Clizco/express-audit-trail" }],
   },
   {
-    id: "presente", cat: "web", mock: "presente", imagen: "",
+    id: "presente", mock: "presente", imagen: "",
     titulo: "Presente",
+    corto: { es: "Asistencia con un QR que cambia cada 20 segundos.", en: "Attendance with a QR code that changes every 20 seconds." },
     estado: { es: "App web", en: "Web app" },
     resumen: {
       es: "Control de asistencia con un QR que cambia cada 20 segundos y validación de ubicación, para que nadie marque asistencia desde fuera del salón.",
@@ -750,8 +747,9 @@ const PROYECTOS = [
     links: [], // repo privado. Si lo haces público: [{ es: "Código", en: "Code", url: "https://github.com/Clizco/reto-asistencia" }]
   },
   {
-    id: "ultron", cat: "ai", mock: "ultron", imagen: "",
+    id: "ultron", mock: "ultron", imagen: "",
     titulo: "Ultron",
+    corto: { es: "Un orquestador reparte tareas entre 10 agentes de IA.", en: "An orchestrator splits tasks across 10 AI agents." },
     estado: { es: "En desarrollo", en: "In progress" },
     resumen: {
       es: "Plataforma de ingeniería de software con IA: un orquestador que planifica tareas y las reparte entre agentes especializados, con aprobación humana antes de abrir el Pull Request.",
@@ -765,8 +763,9 @@ const PROYECTOS = [
     links: [],
   },
   {
-    id: "jira", cat: "ai", mock: "jira", imagen: "",
+    id: "jira", mock: "jira", imagen: "",
     titulo: "Jira Service Management",
+    corto: { es: "Flujos automatizados para operaciones bancarias y de servicio.", en: "Automated workflows for banking and service operations." },
     estado: { es: "Automatización · Banca", en: "Automation · Banking" },
     resumen: {
       es: "Automatización de flujos empresariales para operaciones bancarias y gestión de servicios.",
@@ -780,8 +779,9 @@ const PROYECTOS = [
     links: [],
   },
   {
-    id: "inspiring", cat: "web", mock: "inspiring", imagenes: ["img/inspiring-girls-1-inicio.webp", "img/inspiring-girls-2-programas.webp", "img/inspiring-girls-3-participa.webp"],
+    id: "inspiring", mock: "inspiring", imagenes: ["img/inspiring-girls-1-inicio.webp", "img/inspiring-girls-2-programas.webp", "img/inspiring-girls-3-participa.webp"],
     titulo: "Inspiring Girls",
+    corto: { es: "Sitio bilingüe con CMS para conectar niñas con mujeres referentes.", en: "Bilingual CMS site connecting girls with female role models." },
     estado: { es: "Sitio web + CMS", en: "Website + CMS" },
     resumen: {
       es: "Sitio de Inspiring Girls Panamá, una organización que conecta niñas con mujeres referentes: noticias, galería, programas, apoyo psicológico y un panel admin para contactos y suscriptores.",
@@ -875,7 +875,7 @@ const TXT = {
     "load.kicker": "Stack · Mis cargas", "load.title": "Con qué trabajo", "load.sub": "Según la misión cambio de equipo. Cada carga muestra con qué trabajo y en qué proyectos reales la he usado.",
     "load.main": "Arma principal", "load.secondary": "Arma secundaria", "load.tested": "Probada en", "load.tab": "Carga",
     "work.kicker": "Proyectos · Botín", "work.title": "Lo que he construido", "work.sub": "No son ejercicios: son sistemas que hoy mueven paquetes, vehículos y dinero de verdad.",
-    "work.fav": "Mi mayor orgullo", "work.more": "Más proyectos", "work.all": "Todos", "work.view": "Ver caso completo", "work.details": "Ver detalles",
+    "work.fav": "Mi mayor orgullo", "work.more": "Más proyectos", "work.view": "Ver caso completo", "work.details": "Ver detalles",
     "m.highlights": "Lo más destacado", "m.stack": "Tecnologías", "m.apps": "Una plataforma, varias apps",
     "svc.kicker": "Servicios · Habilidades", "svc.title": "En qué te puedo ayudar", "svc.all": "Todo lo que puedo hacer", "svc.sub": "De la idea al sistema en producción, con código limpio, pruebas y documentación.",
     "svc.kinds": ["Definitiva", "Táctica", "Táctica", "Pasiva", "Pasiva", "Pasiva"],
@@ -916,7 +916,7 @@ const TXT = {
     "load.kicker": "Stack · My loadouts", "load.title": "What I work with", "load.sub": "The mission decides the gear. Each loadout shows what I work with and the real projects where I've used it.",
     "load.main": "Primary weapon", "load.secondary": "Secondary weapon", "load.tested": "Field-tested in", "load.tab": "Loadout",
     "work.kicker": "Projects · Loot", "work.title": "What I've built", "work.sub": "Not exercises: systems that move real packages, vehicles and money today.",
-    "work.fav": "My proudest build", "work.more": "More projects", "work.all": "All", "work.view": "Read the case study", "work.details": "View details",
+    "work.fav": "My proudest build", "work.more": "More projects", "work.view": "Read the case study", "work.details": "View details",
     "m.highlights": "Highlights", "m.stack": "Tech stack", "m.apps": "One platform, several apps",
     "svc.kicker": "Services · Abilities", "svc.title": "How I can help", "svc.all": "Everything I can do", "svc.sub": "From idea to a production system, with clean code, tests and documentation.",
     "svc.kinds": ["Ultimate", "Tactical", "Tactical", "Passive", "Passive", "Passive"],
@@ -1087,7 +1087,7 @@ const MOCKS = {
     </div>`,
 };
 const fotos = (p) => (p.imagenes?.length ? p.imagenes : p.imagen ? [p.imagen] : []);
-const visual = (p) => { const f = fotos(p)[0]; return f ? `<img ${p.portadaEntera ? 'class="whole"' : ""} src="${esc(f)}" alt="${esc(p.titulo)}" loading="lazy" />` : (MOCKS[p.mock] || (() => ""))(); };
+const visual = (p) => { const f = fotos(p)[0]; return f ? `<img src="${esc(f)}" alt="${esc(p.titulo)}" loading="lazy" />` : (MOCKS[p.mock] || (() => ""))(); };
 
 /* ---------------------------- render ---------------------------- */
 const rarOf = (p) => RAREZAS[RAREZA[p.id] || "rare"];
@@ -1098,7 +1098,6 @@ const WEAPONS = {
   main: '<svg viewBox="0 0 240 80" aria-hidden="true"><path d="M6 32 58 30 68 20H150L160 30H234V38H172V47H122L110 72H86L96 47H60L30 64H8L20 47H6Z"/><path d="M84 12H136V17H84Z"/></svg>',
   secondary: '<svg viewBox="0 0 240 80" aria-hidden="true"><path d="M46 22H186L196 31V43H124L116 72H90L98 43H46Z"/><path d="M196 33H216V39H196Z"/></svg>',
 };
-let filter = "all";
 let carga = 0;
 
 function renderLoadout() {
@@ -1144,9 +1143,6 @@ function renderStatic() {
       </div>
     </article>`).join("");
 
-  const used = [...new Set(PROYECTOS.filter((p) => !p.destacado).map((p) => p.cat))];
-  $("#filters").innerHTML = [`<button class="filter" data-f="all" aria-pressed="${filter === "all"}">${t("work.all")}</button>`,
-    ...used.map((c) => `<button class="filter" data-f="${c}" aria-pressed="${filter === c}">${esc(L(CATEGORIAS[c]))}</button>`)].join("");
   renderGrid();
 
   const kinds = t("svc.kinds"), keys = ["R", "Q", "E", "F", "G", "C"];
@@ -1188,16 +1184,17 @@ function renderStatic() {
   observe();
 }
 
+/* ✏️  Orden de "Más proyectos". Filas: 2 grandes, 3 medianas, 2 grandes */
+const MAS_PROYECTOS = ["davinci", "piyo", "audit", "presente", "ultron", "inspiring", "jira"];
 function renderGrid() {
-  const list = PROYECTOS.filter((p) => !p.destacado && (filter === "all" || p.cat === filter));
+  const list = MAS_PROYECTOS.map((id) => PROYECTOS.find((p) => p.id === id));
   $("#grid").innerHTML = list.map((p, i) => `
     <button class="card cut" data-open="${p.id}" style="--c:${rarOf(p).color};animation-delay:${i * 50}ms" aria-label="${esc(p.titulo)}: ${t("work.details")}">
       <div class="card-visual" aria-hidden="true">${visual(p)}</div>
       <div class="card-body">
         ${rarityHTML(p)}
         <h4>${esc(p.titulo)}</h4>
-        <p>${esc(L(p.resumen))}</p>
-        <div class="tags">${p.stack.slice(0, 4).map((s) => `<span class="tag">${esc(s)}</span>`).join("")}</div>
+        <p>${esc(L(p.corto))}</p>
         <span class="card-cta">${t("work.details")} »</span>
       </div>
     </button>`).join("");
@@ -1240,12 +1237,6 @@ document.addEventListener("click", (e) => {
   }
   const tab = e.target.closest("[data-load]");
   if (tab) { carga = +tab.dataset.load; renderLoadout(); $(`[data-load="${carga}"]`).focus(); return; }
-  const f = e.target.closest("[data-f]");
-  if (f) {
-    filter = f.dataset.f;
-    document.querySelectorAll("[data-f]").forEach((b) => b.setAttribute("aria-pressed", b === f));
-    return renderGrid();
-  }
   const l = e.target.closest("[data-lang]");
   if (l && l.dataset.lang !== lang) { lang = l.dataset.lang; store.set("lang", lang); renderStatic(); startFeed(); return; }
   const copy = e.target.closest("#copyBtn");
