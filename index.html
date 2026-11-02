@@ -711,11 +711,11 @@ const PROYECTOS = [
   {
     id: "piyo", cat: "ai", mock: "factura", imagenes: ["img/piyo-2-escaneo-ia.webp", "img/piyo-1-panel.webp"],
     titulo: "Piyo",
-    estado: { es: "Facturas con IA · Apagado por ahora", en: "AI invoices · Offline for now" },
-    privado: { es: "El sistema está apagado por ahora y el código es privado. Puedo contarte en una llamada cómo lo construí.", en: "The system is offline for now and the code is private. Happy to walk you through how I built it on a call." },
+    estado: { es: "Facturas y cuentas con IA", en: "AI invoices & accounts" },
+    privado: { es: "Proyecto privado: estas capturas son lo que puedo enseñar. En una llamada te cuento cómo lo construí.", en: "Private project: these screenshots are what I can share. Happy to walk you through how I built it on a call." },
     resumen: {
-      es: "Sistema de gestión de cuentas con IA que construí para automatizar el procesamiento de facturas: subías la factura o una foto y extraía el proveedor, los montos, las fechas y los conceptos, con menos trabajo manual y menos errores de captura.",
-      en: "AI account management system I built to automate invoice processing: you uploaded the invoice or a photo and it extracted the vendor, amounts, dates and line items, with less manual work and fewer data-entry errors.",
+      es: "Sistema de gestión de cuentas con IA que construí para automatizar el procesamiento de facturas: a partir de la factura o una foto, extrae el proveedor, los montos, las fechas y los conceptos, con menos trabajo manual y menos errores de captura.",
+      en: "AI account management system I built to automate invoice processing: from the invoice or a photo, it extracts the vendor, amounts, dates and line items, with less manual work and fewer data-entry errors.",
     },
     puntos: {
       es: ["Escaneo de facturas con OCR y OpenAI API", "Gastos y reembolsos, con totales por mes y exportación", "Catálogos de cuentas, centros de costos, métodos de pago y proveedores", "Registro manual o importación desde Excel"],
@@ -830,8 +830,8 @@ const IA_CASOS = [
     es: { tag: "Davinci", t: "Fichas de producto desde una foto", antes: "Escribir a mano el nombre, la descripción y las etiquetas, y buscar un precio de referencia.", con: "Subes la foto y la IA sugiere todo, con precio nuevo y usado. Tú revisas y aplicas lo que quieras." },
     en: { tag: "Davinci", t: "Product listings from a photo", antes: "Typing the name, description and tags by hand, then looking up a reference price.", con: "Upload the photo and the AI suggests it all, with new and used prices. You review and apply what you want." } },
   { visual: "factura", open: "piyo",
-    es: { tag: "Piyo · Apagado por ahora", t: "Facturas que se leen solas", antes: "Copiar de cada factura el número, la fecha, la empresa, los impuestos y el total.", con: "Le haces una foto y la IA extrae esos datos de forma estructurada, listos para usar en el sistema." },
-    en: { tag: "Piyo · Offline for now", t: "Invoices that read themselves", antes: "Copying the number, date, company, taxes and total from every invoice.", con: "Take a photo and the AI extracts that data in a structured form, ready to use in the system." } },
+    es: { tag: "Piyo", t: "Facturas que se leen solas", antes: "Copiar de cada factura el número, la fecha, la empresa, los impuestos y el total.", con: "Le haces una foto y la IA extrae esos datos de forma estructurada, listos para usar en el sistema." },
+    en: { tag: "Piyo", t: "Invoices that read themselves", antes: "Copying the number, date, company, taxes and total from every invoice.", con: "Take a photo and the AI extracts that data in a structured form, ready to use in the system." } },
   { visual: "tienda", open: "getpack",
     es: { tag: "GetPack · Store AI", t: "Un asistente que conoce tu tienda", antes: "Clientes que preguntan lo mismo una y otra vez y esperan a que alguien responda.", con: "Responde al momento y consulta tus productos antes de hablar de precio o stock, con la orden de no inventar datos." },
     en: { tag: "GetPack · Store AI", t: "An assistant that knows your store", antes: "Customers asking the same things over and over, waiting for someone to reply.", con: "It replies right away and checks your products before mentioning price or stock, under orders not to make data up." } },
