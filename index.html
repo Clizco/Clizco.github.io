@@ -134,14 +134,6 @@
     .op-foto img { display: block; width: 100%; height: auto; }
     .op-foto figcaption { position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 34px 18px 12px; background: linear-gradient(transparent, rgba(8,8,10,.9)); font-family: var(--hud); font-size: .7rem; font-weight: 700; letter-spacing: 1.1px; text-transform: uppercase; color: #dddcdf; }
     .op-foto figcaption b { font-family: var(--display); font-style: italic; font-weight: 800; font-size: 1.5rem; letter-spacing: 0; color: var(--text); line-height: 1; }
-    .about-rules { grid-column: 1 / -1; }
-    .rules-title { font-family: var(--display); font-style: italic; font-weight: 800; font-size: 1.7rem; text-transform: uppercase; margin: 0 0 10px; }
-    .rules { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-    @media (max-width: 1000px) { .rules { grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 560px) { .rules { grid-template-columns: 1fr; } }
-    .rule { --k: 10px; background: var(--card); padding: 12px 18px; }
-    .rule b { display: block; font-family: var(--hud); font-size: .84rem; font-weight: 700; letter-spacing: .3px; color: var(--red-hi); }
-    .rule span { color: var(--muted); font-size: .94rem; }
     .bars { padding: 0 24px 18px; display: grid; gap: 5px; }
     .bar-shield { height: 9px; background: var(--shield); -webkit-mask: repeating-linear-gradient(90deg, #000 0 calc(25% - 3px), transparent calc(25% - 3px) 25%); mask: repeating-linear-gradient(90deg, #000 0 calc(25% - 3px), transparent calc(25% - 3px) 25%); transform: skewX(-20deg); animation: fill 1.2s ease-out both; transform-origin: left; }
     .bar-health { height: 5px; background: var(--text); transform: skewX(-20deg); }
@@ -588,10 +580,6 @@
       <div class="facts" id="facts"></div>
       <div class="learning" id="learning"></div>
     </div>
-    <div class="about-rules reveal">
-      <h3 class="rules-title" data-t="rules.title"></h3>
-      <div class="rules" id="rules"></div>
-    </div>
   </div>
 </section>
 
@@ -723,10 +711,11 @@ const PROYECTOS = [
   {
     id: "piyo", cat: "ai", mock: "factura", imagenes: ["img/piyo-2-escaneo-ia.webp", "img/piyo-1-panel.webp"],
     titulo: "Piyo",
-    estado: { es: "Facturas y cuentas con IA", en: "AI invoices & accounts" },
+    estado: { es: "Facturas con IA · Apagado por ahora", en: "AI invoices · Offline for now" },
+    privado: { es: "El sistema está apagado por ahora y el código es privado. Puedo contarte en una llamada cómo lo construí.", en: "The system is offline for now and the code is private. Happy to walk you through how I built it on a call." },
     resumen: {
-      es: "Sistema de gestión de cuentas con IA que automatiza el procesamiento de facturas: subes la factura o una foto y extrae el proveedor, los montos, las fechas y los conceptos, con menos trabajo manual y menos errores de captura.",
-      en: "AI account management system that automates invoice processing: upload the invoice or a photo and it extracts the vendor, amounts, dates and line items, with less manual work and fewer data-entry errors.",
+      es: "Sistema de gestión de cuentas con IA que construí para automatizar el procesamiento de facturas: subías la factura o una foto y extraía el proveedor, los montos, las fechas y los conceptos, con menos trabajo manual y menos errores de captura.",
+      en: "AI account management system I built to automate invoice processing: you uploaded the invoice or a photo and it extracted the vendor, amounts, dates and line items, with less manual work and fewer data-entry errors.",
     },
     puntos: {
       es: ["Escaneo de facturas con OCR y OpenAI API", "Gastos y reembolsos, con totales por mes y exportación", "Catálogos de cuentas, centros de costos, métodos de pago y proveedores", "Registro manual o importación desde Excel"],
@@ -841,8 +830,8 @@ const IA_CASOS = [
     es: { tag: "Davinci", t: "Fichas de producto desde una foto", antes: "Escribir a mano el nombre, la descripción y las etiquetas, y buscar un precio de referencia.", con: "Subes la foto y la IA sugiere todo, con precio nuevo y usado. Tú revisas y aplicas lo que quieras." },
     en: { tag: "Davinci", t: "Product listings from a photo", antes: "Typing the name, description and tags by hand, then looking up a reference price.", con: "Upload the photo and the AI suggests it all, with new and used prices. You review and apply what you want." } },
   { visual: "factura", open: "piyo",
-    es: { tag: "Piyo", t: "Facturas que se leen solas", antes: "Copiar de cada factura el número, la fecha, la empresa, los impuestos y el total.", con: "Le haces una foto y la IA extrae esos datos de forma estructurada, listos para usar en el sistema." },
-    en: { tag: "Piyo", t: "Invoices that read themselves", antes: "Copying the number, date, company, taxes and total from every invoice.", con: "Take a photo and the AI extracts that data in a structured form, ready to use in the system." } },
+    es: { tag: "Piyo · Apagado por ahora", t: "Facturas que se leen solas", antes: "Copiar de cada factura el número, la fecha, la empresa, los impuestos y el total.", con: "Le haces una foto y la IA extrae esos datos de forma estructurada, listos para usar en el sistema." },
+    en: { tag: "Piyo · Offline for now", t: "Invoices that read themselves", antes: "Copying the number, date, company, taxes and total from every invoice.", con: "Take a photo and the AI extracts that data in a structured form, ready to use in the system." } },
   { visual: "tienda", open: "getpack",
     es: { tag: "GetPack · Store AI", t: "Un asistente que conoce tu tienda", antes: "Clientes que preguntan lo mismo una y otra vez y esperan a que alguien responda.", con: "Responde al momento y consulta tus productos antes de hablar de precio o stock, con la orden de no inventar datos." },
     en: { tag: "GetPack · Store AI", t: "An assistant that knows your store", antes: "Customers asking the same things over and over, waiting for someone to reply.", con: "It replies right away and checks your products before mentioning price or stock, under orders not to make data up." } },
@@ -902,8 +891,7 @@ const TXT = {
     "about.p4": "Trabajo en todo el stack, pero donde más disfruto es en el <strong>backend y la arquitectura</strong>: diseñar bases de datos, APIs seguras y sistemas que no se caen cuando crecen. Sigo aprendiendo <strong>AWS, Docker, Kubernetes y diseño de sistemas</strong>.",
     "facts": [["Alias", "Clizco"], ["Nombre", "Abraham Gonzalez"], ["Base", "España"], ["Idiomas", "Español · Inglés B2+"], ["Especialidad", "Backend y arquitectura"], ["Busco", "Empleo o freelance"], ["Modalidad", "Remoto, presencial o híbrido"], ["Programando", "Desde los 15"], ["Vida anterior", "Streamer y aspirante a pro"]],
     "about.p5": "Sigo siendo gamer, y por eso esta página parece un lobby: elegir stack y elegir carga tienen más en común de lo que crees.",
-    "about.photo": "Operador · Full Stack", "rules.title": "Reglas de combate",
-    "rules": [["Todo cambio deja rastro", "Saqué la auditoría de Koli y la publiqué en npm como express-audit-trail."], ["El dinero se confirma en el servidor", "En GetPack los pagos se validan con webhooks verificados."], ["Lo importante se prueba", "GetPack corre con 123 tests de integración."], ["Cada permiso en su sitio", "Davinci controla el acceso con 45 permisos por módulo."]],
+    "about.photo": "Operador · Full Stack",
     "about.learning": "Desbloqueando:", "about.adv": "PostgreSQL avanzado",
     "proc.kicker": "Fases de la misión", "proc.title": "Cómo trabajo contigo",
     "steps": [["Aterrizaje", "Hablamos de tu negocio, tus usuarios y qué problema hay que resolver primero."], ["Equipamiento", "Defino arquitectura, alcance, tiempos y costo claros, por escrito."], ["Combate", "Entregas cortas con avances que puedes probar cada semana."], ["Victoria", "Despliegue, monitoreo y soporte para que siga funcionando."]],
@@ -945,8 +933,7 @@ const TXT = {
     "about.p4": "I work across the whole stack, but I enjoy <strong>backend and architecture</strong> the most: designing databases, secure APIs and systems that don't fall over as they grow. I keep learning <strong>AWS, Docker, Kubernetes and system design</strong>.",
     "facts": [["Alias", "Clizco"], ["Name", "Abraham Gonzalez"], ["Base", "Spain"], ["Languages", "Spanish · English B2+"], ["Specialty", "Backend & architecture"], ["Looking for", "A job or freelance work"], ["Work mode", "Remote, on-site or hybrid"], ["Coding", "Since age 15"], ["Past life", "Streamer and aspiring pro"]],
     "about.p5": "I'm still a gamer, which is why this page looks like a lobby: picking a stack and picking a loadout have more in common than you'd think.",
-    "about.photo": "Operator · Full Stack", "rules.title": "Rules of engagement",
-    "rules": [["Every change leaves a trace", "I took Koli's audit log and published it on npm as express-audit-trail."], ["Money is confirmed on the server", "GetPack validates payments with verified webhooks."], ["What matters gets tested", "GetPack runs on 123 integration tests."], ["Every permission in its place", "Davinci controls access with 45 permissions by module."]],
+    "about.photo": "Operator · Full Stack",
     "about.learning": "Unlocking:", "about.adv": "Advanced PostgreSQL",
     "proc.kicker": "Mission phases", "proc.title": "How we'll work together",
     "steps": [["Landing", "We talk about your business, your users and which problem to solve first."], ["Gearing up", "I define architecture, scope, timeline and cost, in writing."], ["Combat", "Short iterations with progress you can try every week."], ["Victory", "Deployment, monitoring and support so it keeps running."]],
@@ -1168,7 +1155,6 @@ function renderStatic() {
     <div class="service cut reveal" style="--c:${s.c}"><span class="num"><kbd>${keys[i]}</kbd>${kinds[i]}</span><h3>${esc(d.t)}</h3><p>${esc(d.d)}</p><ul>${d.i.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></div>`; }).join("");
 
   $("#facts").innerHTML = t("facts").map(([a, b]) => `<div class="fact cut"><small>${a}</small><b>${b}</b></div>`).join("");
-  $("#rules").innerHTML = t("rules").map(([a, b]) => `<div class="rule cut"><b>${a}</b><span>${b}</span></div>`).join("");
   $("#perfilCards").innerHTML = t("profile.cards").map(([a, b, c], i) => `<div class="perfil-c cut reveal"><span class="num">0${i + 1}</span><h3>${a}</h3><p>${b}</p><div class="prueba"><b>${t("profile.proof")}</b>${c}</div></div>`).join("");
   $("#perfilDatos").innerHTML = t("profile.facts").map(([a, b]) => `<div><small>${a}</small><b>${b}</b></div>`).join("");
   const iaVisual = (c) => c.visual === "foto" ? `<img src="${esc(c.foto)}" alt="${esc(c[lang].t)}" />` : MOCKS[c.visual]();
@@ -1238,7 +1224,7 @@ function openProject(id) {
     <ul class="feat-list">${L(p.puntos).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
     <h4>${t("m.stack")}</h4>
     <div class="tags">${p.stack.map((s) => `<span class="tag">${esc(s)}</span>`).join("")}</div>
-    ${p.links.length ? `<div class="links">${linksHTML(p)}</div>` : `<p style="color:var(--muted);font-size:.95rem">${t("m.private")}</p>`}`;
+    ${p.links.length ? `<div class="links">${linksHTML(p)}</div>` : `<p style="color:var(--muted);font-size:.95rem">${p.privado ? L(p.privado) : t("m.private")}</p>`}`;
   modal.showModal();
   modal.scrollTop = 0;
 }
