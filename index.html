@@ -352,7 +352,6 @@
     .fact:last-child:nth-child(odd) { grid-column: 1 / -1; }
     .fact small { display: block; font-family: var(--hud); color: var(--muted); font-size: .7rem; letter-spacing: 1px; text-transform: uppercase; }
     .fact b { font-weight: 600; }
-    .learning { margin-top: 18px; display: flex; gap: 6px; flex-wrap: wrap; align-items: center; font-family: var(--hud); font-size: .74rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--shield); }
     @media (max-width: 900px) { .about { grid-template-columns: 1fr; gap: 34px; } }
 
     /* ---------- FASES ---------- */
@@ -578,7 +577,6 @@
         <figcaption><span data-t="about.photo"></span><b>Clizco</b></figcaption>
       </figure>
       <div class="facts" id="facts"></div>
-      <div class="learning" id="learning"></div>
     </div>
   </div>
 </section>
@@ -892,7 +890,6 @@ const TXT = {
     "facts": [["Alias", "Clizco"], ["Nombre", "Abraham Gonzalez"], ["Base", "España"], ["Idiomas", "Español · Inglés B2+"], ["Especialidad", "Backend y arquitectura"], ["Busco", "Empleo o freelance"], ["Modalidad", "Remoto, presencial o híbrido"], ["Programando", "Desde los 15"], ["Vida anterior", "Streamer y aspirante a pro"]],
     "about.p5": "Sigo siendo gamer, y por eso esta página parece un lobby: elegir stack y elegir carga tienen más en común de lo que crees.",
     "about.photo": "Operador · Full Stack",
-    "about.learning": "Desbloqueando:", "about.adv": "PostgreSQL avanzado",
     "proc.kicker": "Fases de la misión", "proc.title": "Cómo trabajo contigo",
     "steps": [["Aterrizaje", "Hablamos de tu negocio, tus usuarios y qué problema hay que resolver primero."], ["Equipamiento", "Defino arquitectura, alcance, tiempos y costo claros, por escrito."], ["Combate", "Entregas cortas con avances que puedes probar cada semana."], ["Victoria", "Despliegue, monitoreo y soporte para que siga funcionando."]],
     "contact.kicker": "Contacto · Escuadrón", "contact.title": "Falta un jugador: tú.", "contact.sub": "Cuéntame tu idea o tu vacante y te respondo en menos de 24 horas.",
@@ -934,7 +931,6 @@ const TXT = {
     "facts": [["Alias", "Clizco"], ["Name", "Abraham Gonzalez"], ["Base", "Spain"], ["Languages", "Spanish · English B2+"], ["Specialty", "Backend & architecture"], ["Looking for", "A job or freelance work"], ["Work mode", "Remote, on-site or hybrid"], ["Coding", "Since age 15"], ["Past life", "Streamer and aspiring pro"]],
     "about.p5": "I'm still a gamer, which is why this page looks like a lobby: picking a stack and picking a loadout have more in common than you'd think.",
     "about.photo": "Operator · Full Stack",
-    "about.learning": "Unlocking:", "about.adv": "Advanced PostgreSQL",
     "proc.kicker": "Mission phases", "proc.title": "How we'll work together",
     "steps": [["Landing", "We talk about your business, your users and which problem to solve first."], ["Gearing up", "I define architecture, scope, timeline and cost, in writing."], ["Combat", "Short iterations with progress you can try every week."], ["Victory", "Deployment, monitoring and support so it keeps running."]],
     "contact.kicker": "Contact · Squad", "contact.title": "One player missing: you.", "contact.sub": "Tell me about your idea or your open role and I'll reply within 24 hours.",
@@ -1177,7 +1173,6 @@ function renderStatic() {
       <a class="btn ${d.main ? "btn-primary" : "btn-ghost"}" href="mailto:${PERFIL.email}?subject=${encodeURIComponent(d.subj)}">${d.cta}</a>
     </div>`).join("");
   $("#iaCtaBtn").href = `mailto:${PERFIL.email}?subject=${encodeURIComponent(t("ai.cta.subj"))}`;
-  $("#learning").innerHTML = `<span>${t("about.learning")}</span>${["AWS", "Kubernetes", "System Design", t("about.adv")].map((x) => `<span class="tag">${x}</span>`).join("")}`;
   $("#steps").innerHTML = t("steps").map(([a, b], i) => `<div class="step reveal"><b>${lang === "es" ? "Fase" : "Phase"} 0${i + 1}</b><h3>${a}</h3><p>${b}</p></div>`).join("");
   $("#squad").innerHTML = t("squad").map(([s, n], i) => `<div class="cut ${i ? "open" : ""}"><small>${s}</small><b>${n}</b></div>`).join("");
 
