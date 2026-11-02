@@ -710,7 +710,6 @@ const PROYECTOS = [
     id: "piyo", cat: "ai", mock: "factura", imagenes: ["img/piyo-2-escaneo-ia.webp", "img/piyo-1-panel.webp"],
     titulo: "Piyo",
     estado: { es: "Facturas y cuentas con IA", en: "AI invoices & accounts" },
-    privado: { es: "Proyecto privado: estas capturas son lo que puedo enseñar. En una llamada te cuento cómo lo construí.", en: "Private project: these screenshots are what I can share. Happy to walk you through how I built it on a call." },
     resumen: {
       es: "Sistema de gestión de cuentas con IA que construí para automatizar el procesamiento de facturas: a partir de la factura o una foto, extrae el proveedor, los montos, las fechas y los conceptos, con menos trabajo manual y menos errores de captura.",
       en: "AI account management system I built to automate invoice processing: from the invoice or a photo, it extracts the vendor, amounts, dates and line items, with less manual work and fewer data-entry errors.",
@@ -879,7 +878,7 @@ const TXT = {
     "load.main": "Arma principal", "load.secondary": "Arma secundaria", "load.tested": "Probada en", "load.tab": "Carga",
     "work.kicker": "Proyectos · Botín", "work.title": "Lo que he construido", "work.sub": "No son ejercicios: son sistemas que hoy mueven paquetes, vehículos y dinero de verdad.",
     "work.fav": "Mi mayor orgullo", "work.more": "Más proyectos", "work.all": "Todos", "work.view": "Ver caso completo", "work.details": "Ver detalles",
-    "m.highlights": "Lo más destacado", "m.stack": "Tecnologías", "m.apps": "Una plataforma, varias apps", "m.private": "Proyecto privado: puedo mostrarlo en una llamada.",
+    "m.highlights": "Lo más destacado", "m.stack": "Tecnologías", "m.apps": "Una plataforma, varias apps",
     "svc.kicker": "Servicios · Habilidades", "svc.title": "En qué te puedo ayudar", "svc.all": "Todo lo que puedo hacer", "svc.sub": "De la idea al sistema en producción, con código limpio, pruebas y documentación.",
     "svc.kinds": ["Definitiva", "Táctica", "Táctica", "Pasiva", "Pasiva", "Pasiva"],
     "about.kicker": "Operador", "about.title": "Soy Clizco.",
@@ -920,7 +919,7 @@ const TXT = {
     "load.main": "Primary weapon", "load.secondary": "Secondary weapon", "load.tested": "Field-tested in", "load.tab": "Loadout",
     "work.kicker": "Projects · Loot", "work.title": "What I've built", "work.sub": "Not exercises: systems that move real packages, vehicles and money today.",
     "work.fav": "My proudest build", "work.more": "More projects", "work.all": "All", "work.view": "Read the case study", "work.details": "View details",
-    "m.highlights": "Highlights", "m.stack": "Tech stack", "m.apps": "One platform, several apps", "m.private": "Private project: happy to walk you through it on a call.",
+    "m.highlights": "Highlights", "m.stack": "Tech stack", "m.apps": "One platform, several apps",
     "svc.kicker": "Services · Abilities", "svc.title": "How I can help", "svc.all": "Everything I can do", "svc.sub": "From idea to a production system, with clean code, tests and documentation.",
     "svc.kinds": ["Ultimate", "Tactical", "Tactical", "Passive", "Passive", "Passive"],
     "about.kicker": "Operator", "about.title": "I'm Clizco.",
@@ -1219,7 +1218,7 @@ function openProject(id) {
     <ul class="feat-list">${L(p.puntos).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
     <h4>${t("m.stack")}</h4>
     <div class="tags">${p.stack.map((s) => `<span class="tag">${esc(s)}</span>`).join("")}</div>
-    ${p.links.length ? `<div class="links">${linksHTML(p)}</div>` : `<p style="color:var(--muted);font-size:.95rem">${p.privado ? L(p.privado) : t("m.private")}</p>`}`;
+    ${p.links.length ? `<div class="links">${linksHTML(p)}</div>` : ""}`;
   modal.showModal();
   modal.scrollTop = 0;
 }
