@@ -721,6 +721,21 @@ const PROYECTOS = [
     links: [],
   },
   {
+    id: "piyo", cat: "ai", mock: "factura", imagenes: ["img/piyo-2-escaneo-ia.webp", "img/piyo-1-panel.webp"],
+    titulo: "Piyo",
+    estado: { es: "Facturas y cuentas con IA", en: "AI invoices & accounts" },
+    resumen: {
+      es: "Sistema de gestión de cuentas con IA que automatiza el procesamiento de facturas: subes la factura o una foto y extrae el proveedor, los montos, las fechas y los conceptos, con menos trabajo manual y menos errores de captura.",
+      en: "AI account management system that automates invoice processing: upload the invoice or a photo and it extracts the vendor, amounts, dates and line items, with less manual work and fewer data-entry errors.",
+    },
+    puntos: {
+      es: ["Escaneo de facturas con OCR y OpenAI API", "Gastos y reembolsos, con totales por mes y exportación", "Catálogos de cuentas, centros de costos, métodos de pago y proveedores", "Registro manual o importación desde Excel"],
+      en: ["Invoice scanning with OCR and the OpenAI API", "Expenses and reimbursements, with monthly totals and export", "Catalogs for accounts, cost centers, payment methods and vendors", "Manual entry or import from Excel"],
+    },
+    stack: ["React", "TypeScript", "Node.js", "PostgreSQL", "OCR", "OpenAI API"],
+    links: [],
+  },
+  {
     id: "audit", cat: "oss", mock: "audit", imagen: "",
     titulo: "express-audit-trail",
     estado: { es: "Paquete npm", en: "npm package" },
@@ -825,9 +840,9 @@ const IA_CASOS = [
   { visual: "foto", foto: "img/davinci-1-analisis-ia.webp", open: "davinci", real: true,
     es: { tag: "Davinci", t: "Fichas de producto desde una foto", antes: "Escribir a mano el nombre, la descripción y las etiquetas, y buscar un precio de referencia.", con: "Subes la foto y la IA sugiere todo, con precio nuevo y usado. Tú revisas y aplicas lo que quieras." },
     en: { tag: "Davinci", t: "Product listings from a photo", antes: "Typing the name, description and tags by hand, then looking up a reference price.", con: "Upload the photo and the AI suggests it all, with new and used prices. You review and apply what you want." } },
-  { visual: "factura",
-    es: { tag: "Proyecto para un cliente", t: "Facturas que se leen solas", antes: "Copiar de cada factura el número, la fecha, la empresa, los impuestos y el total.", con: "Le haces una foto y la IA extrae esos datos de forma estructurada, listos para usar en el sistema." },
-    en: { tag: "Client project", t: "Invoices that read themselves", antes: "Copying the number, date, company, taxes and total from every invoice.", con: "Take a photo and the AI extracts that data in a structured form, ready to use in the system." } },
+  { visual: "factura", open: "piyo",
+    es: { tag: "Piyo", t: "Facturas que se leen solas", antes: "Copiar de cada factura el número, la fecha, la empresa, los impuestos y el total.", con: "Le haces una foto y la IA extrae esos datos de forma estructurada, listos para usar en el sistema." },
+    en: { tag: "Piyo", t: "Invoices that read themselves", antes: "Copying the number, date, company, taxes and total from every invoice.", con: "Take a photo and the AI extracts that data in a structured form, ready to use in the system." } },
   { visual: "tienda", open: "getpack",
     es: { tag: "GetPack · Store AI", t: "Un asistente que conoce tu tienda", antes: "Clientes que preguntan lo mismo una y otra vez y esperan a que alguien responda.", con: "Responde al momento y consulta tus productos antes de hablar de precio o stock, con la orden de no inventar datos." },
     en: { tag: "GetPack · Store AI", t: "An assistant that knows your store", antes: "Customers asking the same things over and over, waiting for someone to reply.", con: "It replies right away and checks your products before mentioning price or stock, under orders not to make data up." } },
@@ -837,7 +852,7 @@ const IA_CASOS = [
 ];
 
 /* ✏️  RAREZAS: legendary, epic o rare. Cambia el color y la etiqueta de cada proyecto */
-const RAREZA = { getpack: "legendary", koli: "legendary", davinci: "epic", audit: "epic", ultron: "epic", presente: "rare", jira: "rare", inspiring: "rare" };
+const RAREZA = { getpack: "legendary", koli: "legendary", davinci: "epic", piyo: "epic", audit: "epic", ultron: "epic", presente: "rare", jira: "rare", inspiring: "rare" };
 const RAREZAS = {
   legendary: { color: "var(--legendary)", es: "Legendario", en: "Legendary" },
   epic: { color: "var(--epic)", es: "Épico", en: "Epic" },
@@ -851,7 +866,7 @@ const CARGAS = [
   { es: "Datos", en: "Data", principal: ["MariaDB", "legendary"], secundaria: ["PostgreSQL", "epic"], accesorios: ["MySQL", "MongoDB", { es: "Migraciones", en: "Migrations" }, { es: "Auditoría", en: "Audit log" }], probado: ["getpack", "koli", "davinci", "presente"] },
   { es: "DevOps", en: "DevOps", principal: ["Docker", "epic"], secundaria: ["Nginx + PM2", "epic"], accesorios: ["GitHub Actions", "DigitalOcean", "Linux", "HTTPS"], probado: ["getpack", "koli"] },
   { es: "Móvil", en: "Mobile", principal: ["Capacitor + React", "legendary"], secundaria: ["Firebase", "rare"], accesorios: ["iOS", "Android", "Push", "Updates OTA"], probado: ["getpack"] },
-  { es: "IA", en: "AI", principal: ["Claude Agent SDK", "epic"], secundaria: ["OpenAI API", "epic"], accesorios: [{ es: "Agentes", en: "Agents" }, { es: "Aprobación humana", en: "Human approval" }, "FastAPI", "Streamlit"], probado: ["ultron", "davinci"] },
+  { es: "IA", en: "AI", principal: ["Claude Agent SDK", "epic"], secundaria: ["OpenAI API", "epic"], accesorios: [{ es: "Agentes", en: "Agents" }, { es: "Aprobación humana", en: "Human approval" }, "FastAPI", "Streamlit"], probado: ["ultron", "davinci", "piyo"] },
 ];
 
 const TXT = {
