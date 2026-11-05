@@ -107,7 +107,9 @@
     .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 
     .op { background: rgba(16,16,19,.94); border: 1px solid var(--line); --k: 22px; }
-    .op-top { display: block; padding: 24px 24px 18px; }
+    .op-top { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 18px; padding: 24px 24px 18px; align-items: center; }
+    .op-emblem { width: 112px; height: 132px; overflow: hidden; background: var(--card-2); clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); }
+    .op-emblem img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 28%; display: block; }
     .op-label { font-family: var(--hud); font-size: .72rem; letter-spacing: 1.2px; color: var(--red-hi); font-weight: 700; text-transform: uppercase; }
     .op-name { font-family: var(--display); font-style: italic; font-weight: 800; font-size: 2.3rem; line-height: 1; text-transform: uppercase; margin: 2px 0 4px; }
     .op-class { color: var(--muted); font-size: .93rem; }
@@ -154,7 +156,8 @@
     @keyframes feedin { from { opacity: 0; transform: translateX(16px); } }
     @media (max-width: 960px) { .hero .wrap { grid-template-columns: 1fr; gap: 40px; } .hero { padding-top: 48px; } .hero::before { width: 90%; opacity: .5; } }
     @media (max-width: 420px) {
-      .op-top { padding: 20px 16px 16px; }
+      .op-top { grid-template-columns: 82px minmax(0, 1fr); gap: 12px; padding: 20px 16px 16px; }
+      .op-emblem { width: 82px; height: 100px; }
       .ability { grid-template-columns: 78px minmax(0, 1fr); padding-inline: 16px; }
       .op-firma { padding-inline: 16px; }
       .quick-socials { padding-inline: 16px; }
@@ -474,6 +477,7 @@
     <div>
       <div class="op cut">
         <div class="op-top">
+          <div class="op-emblem" aria-hidden="true"><img src="img/clizco-profile.webp" alt="" /></div>
           <div>
             <div class="op-label" data-t="op.label"></div>
             <div class="op-name">Clizco</div>
