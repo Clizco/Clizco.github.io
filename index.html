@@ -49,13 +49,14 @@
     a { color: inherit; text-decoration: none; }
     button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
     ul { list-style: none; }
-    .wrap { width: min(var(--max), 100% - 32px); margin-inline: auto; }
+    .wrap { width: min(var(--max), calc(100% - 34px)); margin-inline: auto; }
+    .wrap > * { min-width: 0; }
     .mono { font-family: var(--mono); }
     :focus-visible { outline: 2px solid var(--shield); outline-offset: 2px; }
     .cut { clip-path: polygon(var(--k) 0, 100% 0, 100% calc(100% - var(--k)), calc(100% - var(--k)) 100%, 0 100%, 0 var(--k)); }
 
     /* ---------- NAV ---------- */
-    .nav { position: sticky; top: 0; z-index: 60; background: rgba(10,10,12,.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+    .nav { position: sticky; top: 0; z-index: 60; background: rgba(10,10,12,.94); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
     .nav .wrap { display: flex; align-items: center; gap: 22px; height: 66px; }
     .brand { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-style: italic; font-weight: 800; font-size: 1.45rem; letter-spacing: .3px; text-transform: uppercase; white-space: nowrap; }
     .menu { display: flex; gap: 4px; margin-left: auto; font-family: var(--hud); font-weight: 600; font-size: .86rem; letter-spacing: .6px; text-transform: uppercase; color: var(--muted); }
@@ -92,11 +93,11 @@
     }
 
     /* ---------- HERO ---------- */
-    .hero { position: relative; padding: 72px 0 64px; overflow: hidden; isolation: isolate; }
-    .hero::before { content: ""; position: absolute; z-index: -2; top: -20%; right: -8%; width: 58%; height: 150%; background: linear-gradient(160deg, var(--red) 0%, #7a120e 45%, transparent 85%); transform: skewX(-14deg); opacity: .72; }
+    .hero { position: relative; padding: 82px 0 76px; overflow: hidden; isolation: isolate; }
+    .hero::before { content: ""; position: absolute; z-index: -2; top: -20%; right: -8%; width: 58%; height: 150%; background: linear-gradient(160deg, var(--red) 0%, #7a120e 45%, transparent 85%); transform: skewX(-14deg); opacity: .52; }
     .hero::after { content: ""; position: absolute; z-index: -1; inset: 0; background: repeating-linear-gradient(0deg, rgba(0,0,0,.2) 0 1px, transparent 1px 4px); pointer-events: none; }
-    .hero .wrap { display: grid; grid-template-columns: 1.08fr .92fr; gap: 52px; align-items: center; }
-    .status { display: inline-flex; align-items: center; gap: 10px; font-family: var(--hud); font-weight: 600; font-size: .8rem; letter-spacing: .8px; text-transform: uppercase; background: var(--card-2); padding: 7px 18px 7px 14px; margin-bottom: 22px; clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%); }
+    .hero .wrap { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr); gap: 52px; align-items: center; }
+    .status { display: inline-flex; max-width: 100%; align-items: center; gap: 10px; font-family: var(--hud); font-weight: 600; font-size: .8rem; letter-spacing: .8px; text-transform: uppercase; background: var(--card-2); padding: 7px 18px 7px 14px; margin-bottom: 22px; clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%); }
     .pulse { width: 9px; height: 9px; background: var(--green); transform: rotate(45deg); animation: pulse 1.6s infinite; }
     @keyframes pulse { 50% { opacity: .35; } }
     h1 { font-family: var(--display); font-style: italic; font-weight: 800; font-size: clamp(3.3rem, 8.4vw, 6.6rem); line-height: .88; letter-spacing: -.5px; text-transform: uppercase; }
@@ -115,6 +116,10 @@
     .op-real { font-family: var(--hud); font-weight: 700; font-size: .84rem; letter-spacing: .6px; margin-bottom: 4px; }
     .op-firma { border-top: 1px solid var(--line); padding: 14px 24px 16px; display: flex; justify-content: center; }
     .op-firma .firma { width: min(270px, 100%); }
+    .quick-socials { display: flex; justify-content: center; gap: 8px; padding: 0 24px 18px; }
+    .quick-social { display: inline-flex; align-items: center; gap: 7px; padding: 7px 10px; color: var(--muted); border: 1px solid var(--line); font-family: var(--hud); font-size: .68rem; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; transition: color .15s, border-color .15s, background .15s; }
+    .quick-social:hover { color: var(--text); border-color: var(--shield); background: var(--card-2); }
+    .quick-social svg, .social-link svg { width: 15px; height: 15px; fill: currentColor; }
     .firma svg { display: block; width: 100%; height: auto; overflow: visible; filter: drop-shadow(0 0 12px rgba(255,90,40,.5)); }
     .firma .draw path { fill: none; stroke: #fff; stroke-width: 44; stroke-linejoin: round; stroke-dasharray: 1 1; stroke-dashoffset: 1; }
     .firma.in .draw path { animation: firmaTrazo var(--t) var(--d) cubic-bezier(.45,.05,.55,.95) forwards; }
@@ -150,6 +155,13 @@
     .feed em { font-style: normal; color: var(--legendary); }
     @keyframes feedin { from { opacity: 0; transform: translateX(16px); } }
     @media (max-width: 960px) { .hero .wrap { grid-template-columns: 1fr; gap: 40px; } .hero { padding-top: 48px; } .hero::before { width: 90%; opacity: .5; } }
+    @media (max-width: 420px) {
+      .op-top { grid-template-columns: 72px minmax(0, 1fr); gap: 12px; padding: 20px 16px 16px; }
+      .op-emblem { width: 72px; height: 84px; font-size: 2.2rem; }
+      .ability { grid-template-columns: 78px minmax(0, 1fr); padding-inline: 16px; }
+      .op-firma { padding-inline: 16px; }
+      .quick-socials { padding-inline: 16px; }
+    }
 
     /* ---------- STATS ---------- */
     .proof { background: var(--bg-2); border-block: 1px solid var(--line); }
@@ -166,27 +178,29 @@
     }
 
     /* ---------- SECCIONES ---------- */
-    section { padding: 92px 0; }
+    section { padding: 108px 0; }
     .kicker { font-family: var(--hud); font-weight: 700; font-size: .8rem; color: var(--red-hi); letter-spacing: 1.6px; text-transform: uppercase; margin-bottom: 8px; }
     .kicker::before { content: "/// "; }
     h2 { font-family: var(--display); font-style: italic; font-weight: 800; font-size: clamp(2.7rem, 6vw, 4.4rem); line-height: .95; text-transform: uppercase; }
-    .head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 44px; }
+    .head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 52px; }
+    .head > div, .head h2, .head p { min-width: 0; overflow-wrap: anywhere; }
     .head p { color: var(--muted); font-size: 1.08rem; max-width: 470px; }
 
     /* ---------- CARGAS ---------- */
-    .loadout-sec { background: var(--bg-2); border-block: 1px solid var(--line); }
+    .loadout-sec { background: #0e0e12; border-block: 1px solid var(--line); }
     .tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px; }
     .tab { font-family: var(--hud); font-weight: 700; font-size: .84rem; letter-spacing: .6px; text-transform: uppercase; padding: 10px 22px; background: var(--card); color: var(--muted); clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%); transition: background .15s, color .15s; }
     .tab small { color: inherit; opacity: .65; margin-right: 6px; font-size: .72rem; }
     .tab:hover { color: var(--text); background: var(--card-2); }
-    .tab[aria-selected="true"] { background: var(--red); color: #fff; }
-    .slots { display: grid; grid-template-columns: 1.25fr 1fr; gap: 14px; }
-    .slot { --k: 18px; background: linear-gradient(150deg, color-mix(in srgb, var(--c) 20%, var(--card)) 0%, var(--card) 62%); padding: 20px 24px 22px; position: relative; display: grid; align-content: space-between; gap: 8px; min-height: 216px; animation: feedin .3s ease-out; }
+    .tab[aria-selected="true"] { background: var(--card-2); color: #fff; border: 1px solid var(--red-hi); }
+    .slots { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 14px; }
+    .slot { --k: 18px; min-width: 0; background: linear-gradient(150deg, color-mix(in srgb, var(--c) 20%, var(--card)) 0%, var(--card) 62%); padding: 20px 24px 22px; position: relative; display: grid; align-content: space-between; gap: 8px; min-height: 216px; animation: feedin .3s ease-out; }
     .slot::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: var(--c); }
-    .slot-label { display: flex; justify-content: space-between; gap: 10px; font-family: var(--hud); font-size: .72rem; font-weight: 700; letter-spacing: 1.1px; text-transform: uppercase; color: var(--muted); }
+    .slot-label { min-width: 0; display: flex; justify-content: space-between; gap: 10px; font-family: var(--hud); font-size: .72rem; font-weight: 700; letter-spacing: 1.1px; text-transform: uppercase; color: var(--muted); }
+    .slot-label > * { min-width: 0; overflow-wrap: anywhere; }
     .slot-label b { color: var(--c); }
-    .slot svg { width: min(100%, 300px); height: auto; justify-self: center; fill: var(--c); filter: drop-shadow(0 8px 18px color-mix(in srgb, var(--c) 40%, transparent)); }
-    .slot h3 { font-family: var(--display); font-style: italic; font-weight: 800; font-size: 2.1rem; line-height: 1; text-transform: uppercase; }
+    .slot svg { min-width: 0; max-width: 100%; width: min(100%, 300px); height: auto; justify-self: center; fill: var(--c); filter: drop-shadow(0 8px 18px color-mix(in srgb, var(--c) 40%, transparent)); }
+    .slot h3 { min-width: 0; max-width: 100%; overflow-wrap: anywhere; font-family: var(--display); font-style: italic; font-weight: 800; font-size: 2.1rem; line-height: 1; text-transform: uppercase; }
     .attach { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 14px; }
     .att { background: var(--card); --k: 10px; padding: 14px 16px; display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: .95rem; line-height: 1.2; }
     .att i { flex: none; width: 24px; height: 27px; background: var(--c, var(--rare)); clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); }
@@ -200,11 +214,11 @@
     @media (max-width: 460px) { .attach { grid-template-columns: 1fr; } .inventory { grid-template-columns: 1fr; } }
 
     /* ---------- PROYECTOS ---------- */
-    .featured { display: grid; gap: 24px; }
+    .featured { display: grid; gap: 30px; }
     .feat { --k: 26px; display: grid; grid-template-columns: 1.1fr 1fr; background: var(--card); position: relative; }
     .feat::after, .card::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: var(--c); }
     .feat:nth-child(even) .feat-visual { order: 2; }
-    .feat-visual { min-height: 380px; padding: 32px; display: grid; place-items: center; background: linear-gradient(150deg, color-mix(in srgb, var(--c) 34%, var(--card-2)), var(--card-2) 62%); overflow: hidden; }
+    .feat-visual { min-height: 380px; padding: 38px; display: grid; place-items: center; background: linear-gradient(150deg, color-mix(in srgb, var(--c) 20%, var(--card-2)), var(--card-2) 62%); overflow: hidden; }
     .feat-body { padding: 36px 38px 40px; display: flex; flex-direction: column; gap: 15px; }
     .feat-body h3 { font-family: var(--display); font-style: italic; font-weight: 800; font-size: 3rem; line-height: 1; text-transform: uppercase; }
     .feat-body > p { color: #cfced2; }
@@ -223,7 +237,7 @@
     .app span { display: block; color: #c3c2c8; font-size: .86rem; line-height: 1.32; margin-top: 2px; }
     @media (max-width: 460px) { .apps { grid-template-columns: 1fr; } }
     .rarity { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px; align-self: flex-start; justify-self: start; font-family: var(--hud); font-size: .72rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
-    .rarity b { background: var(--c); color: #0b0b0d; padding: 2px 12px 2px 8px; clip-path: polygon(0 0, 100% 0, calc(100% - 7px) 100%, 0 100%); }
+    .rarity b { background: color-mix(in srgb, var(--c) 18%, var(--card-2)); color: var(--c); border: 1px solid color-mix(in srgb, var(--c) 55%, transparent); padding: 3px 10px; clip-path: none; }
     .tags { display: flex; flex-wrap: wrap; gap: 5px; }
     .tag { font-family: var(--mono); font-size: .72rem; color: #c3c2c8; background: var(--bg); padding: 3px 8px; }
     .links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 6px; }
@@ -231,16 +245,16 @@
     .link:hover { background: var(--c, var(--shield)); color: #0b0b0d; }
     .link.solid { background: var(--text); color: var(--bg); }
     .link.solid:hover { background: var(--c, var(--shield)); }
-    .more-head { margin: 76px 0 24px; display: flex; justify-content: space-between; align-items: end; gap: 20px; flex-wrap: wrap; }
+    .more-head { margin: 92px 0 28px; display: flex; justify-content: space-between; align-items: end; gap: 20px; flex-wrap: wrap; }
     .more-head h3 { font-family: var(--display); font-style: italic; font-weight: 800; font-size: 2.4rem; line-height: 1; text-transform: uppercase; }
     .grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 18px; }
     .grid .card { grid-column: span 3; }
     .grid .card:nth-child(n+3):nth-child(-n+5) { grid-column: span 2; }
     @media (max-width: 1000px) { .grid { grid-template-columns: 1fr 1fr; } .grid .card, .grid .card:nth-child(n+3):nth-child(-n+5) { grid-column: span 1; } .grid .card:first-child { grid-column: span 2; } }
     @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } .grid .card:first-child { grid-column: span 1; } }
-    .card { --k: 18px; text-align: left; background: var(--card); display: flex; flex-direction: column; position: relative; transition: transform .2s, background .2s; animation: feedin .35s both; }
+    .card { --k: 18px; min-width: 0; text-align: left; background: var(--card); display: flex; flex-direction: column; position: relative; transition: transform .2s, background .2s; animation: feedin .35s both; }
     .card:hover { transform: translateY(-5px); background: var(--card-2); }
-    .card-visual { aspect-ratio: 16/10.5; display: grid; place-items: center; padding: 18px; background: linear-gradient(150deg, color-mix(in srgb, var(--c) 38%, var(--card-2)), var(--card-2) 66%); overflow: hidden; position: relative; }
+    .card-visual { aspect-ratio: 16/10.5; display: grid; place-items: center; padding: 18px; background: linear-gradient(150deg, color-mix(in srgb, var(--c) 20%, var(--card-2)), var(--card-2) 66%); overflow: hidden; position: relative; }
     .card-visual img, .m-visual img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
     .card-body { padding: 18px 20px 24px; display: flex; flex-direction: column; gap: 9px; flex: 1; }
     .card-body h4 { font-family: var(--display); font-style: italic; font-weight: 800; font-size: 1.8rem; line-height: 1.02; text-transform: uppercase; overflow-wrap: anywhere; }
@@ -248,7 +262,7 @@
     .card-cta { font-family: var(--hud); font-weight: 700; font-size: .78rem; letter-spacing: .5px; text-transform: uppercase; color: var(--c); margin-top: 4px; }
 
     /* ---------- MOCKUPS (decorativos) ---------- */
-    .mk { width: 100%; max-width: 440px; font-family: var(--sans); color: #e9e8ef; font-size: 10px; line-height: 1.3; pointer-events: none; user-select: none; }
+    .mk { width: 100%; max-width: 440px; min-width: 0; font-family: var(--sans); color: #e9e8ef; font-size: 10px; line-height: 1.3; pointer-events: none; user-select: none; }
     .win { background: #101016; border: 1px solid #2c2b38; border-radius: 8px; overflow: hidden; box-shadow: 0 30px 60px -30px rgba(0,0,0,.9); }
     .win-bar { display: flex; gap: 5px; padding: 8px 10px; border-bottom: 1px solid #24232f; align-items: center; }
     .win-bar i { width: 7px; height: 7px; border-radius: 50%; background: #3a3948; }
@@ -280,10 +294,10 @@
     @media (max-width: 900px) { .perfil { grid-template-columns: 1fr; } .perfil-datos { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 480px) { .perfil-datos { grid-template-columns: 1fr; } }
 
-    .ia-sec { background: var(--bg-2); border-block: 1px solid var(--line); }
+    .ia-sec { background: #0e0e12; border-block: 1px solid var(--line); }
     .ia-casos { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .ia-caso { --k: 18px; background: var(--card); display: flex; flex-direction: column; }
-    .ia-visual { position: relative; aspect-ratio: 16/8.6; display: grid; place-items: center; padding: 18px; overflow: hidden; background: linear-gradient(150deg, color-mix(in srgb, var(--red) 30%, var(--card-2)), var(--card-2) 68%); }
+    .ia-caso { --k: 18px; min-width: 0; background: var(--card); display: flex; flex-direction: column; }
+    .ia-visual { position: relative; min-width: 0; aspect-ratio: 16/8.6; display: grid; place-items: center; padding: 18px; overflow: hidden; background: linear-gradient(150deg, color-mix(in srgb, var(--red) 16%, var(--card-2)), var(--card-2) 68%); }
     .ia-visual .mk { zoom: .82; }
     .ia-texto { padding: 22px 26px 26px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; flex: 1; }
     .ia-tag { font-family: var(--hud); font-size: .7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--legendary); }
@@ -300,7 +314,7 @@
     .ia-prod-foto { background: #f3f2ee; color: #55545a; padding: 12px 12px 8px; display: grid; gap: 6px; justify-items: center; transform: rotate(-2deg); font-size: 11px; }
     .ia-prod-foto svg { width: 78px; height: 88px; display: block; }
     .ia-flecha { font-size: 22px; color: var(--red-hi); }
-    .ia-json { background: #0d0d10; border: 1px solid var(--line); padding: 10px 12px; display: grid; gap: 5px; font-family: var(--mono); font-size: 11px; color: var(--green); }
+    .ia-json { min-width: 0; background: #0d0d10; border: 1px solid var(--line); padding: 10px 12px; display: grid; gap: 5px; font-family: var(--mono); font-size: 11px; color: var(--green); }
     .ia-json small { display: block; color: var(--muted); font-size: 9px; }
     .ia-chat { display: grid; gap: 7px; max-width: 340px; font-size: 12px; }
     .ia-chat .yo { justify-self: end; background: var(--red); color: #fff; padding: 8px 12px; border-radius: 12px 12px 2px 12px; }
@@ -319,16 +333,17 @@
     @media (max-width: 860px) { .ia-casos, .ia-reglas { grid-template-columns: 1fr; } }
     @media (max-width: 420px) { .ia-visual .mk { zoom: .9; } .ia-visual { aspect-ratio: 16/11.5; padding-inline: 12px; } .ia-mk { gap: 8px; } }
 
-    .puertas { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .puerta { --k: 18px; background: var(--card); padding: 28px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+    .puertas { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; }
+    .puerta { --k: 18px; min-width: 0; background: var(--card); padding: 28px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+    .puerta .btn { max-width: 100%; white-space: normal; text-align: center; }
     .puerta small { font-family: var(--hud); font-size: .72rem; font-weight: 700; letter-spacing: 1.1px; text-transform: uppercase; color: var(--red-hi); }
-    .puerta h3 { font-family: var(--display); font-style: italic; font-weight: 800; font-size: 2.3rem; line-height: 1; text-transform: uppercase; }
+    .puerta h3 { max-width: 100%; font-family: var(--display); font-style: italic; font-weight: 800; font-size: 2.3rem; line-height: 1; text-transform: uppercase; overflow-wrap: anywhere; }
     .puerta p { color: #cfced2; }
     .puerta ul { list-style: none; display: grid; gap: 4px; margin-bottom: 8px; flex: 1; align-content: start; color: #dddcdf; font-size: .96rem; }
     .puerta li::before { content: "» "; color: var(--red-hi); }
     @media (max-width: 760px) { .puertas { grid-template-columns: 1fr; } }
-    .services { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-    .service { --k: 16px; background: var(--card); padding: 26px 26px 28px; display: flex; flex-direction: column; gap: 10px; transition: background .2s; }
+    .services { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .service { --k: 16px; min-width: 0; background: var(--card); padding: 30px 28px 32px; display: flex; flex-direction: column; gap: 10px; transition: background .2s; }
     .service:hover { background: var(--card-2); }
     .service .num { display: flex; align-items: center; gap: 10px; font-family: var(--hud); font-weight: 700; font-size: .72rem; letter-spacing: 1px; text-transform: uppercase; color: var(--c); }
     .service .num kbd { font-family: var(--hud); font-size: .86rem; width: 28px; height: 28px; display: grid; place-items: center; color: #0b0b0d; background: var(--c); clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); }
@@ -343,8 +358,8 @@
     .about { display: grid; grid-template-columns: 1.1fr .9fr; gap: 52px; align-items: start; }
     .about-text p { color: #cfced2; font-size: 1.08rem; margin-top: 16px; }
     .about-text p strong { color: var(--text); font-weight: 600; }
-    .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .fact { --k: 10px; background: var(--card); padding: 14px 18px; }
+    .facts { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
+    .fact { --k: 10px; min-width: 0; background: var(--card); padding: 14px 18px; }
     .fact:last-child:nth-child(odd) { grid-column: 1 / -1; }
     .fact small { display: block; font-family: var(--hud); color: var(--muted); font-size: .7rem; letter-spacing: 1px; text-transform: uppercase; }
     .fact b { font-weight: 600; }
@@ -361,7 +376,7 @@
     @media (max-width: 560px) { .steps { grid-template-columns: 1fr; } }
 
     /* ---------- ESCUADRÓN ---------- */
-    .contact { --k: 30px; position: relative; padding: clamp(36px, 6vw, 68px) clamp(22px, 5vw, 60px); background: linear-gradient(120deg, #6d100c, var(--card) 62%); }
+    .contact { --k: 30px; position: relative; padding: clamp(36px, 6vw, 68px) clamp(22px, 5vw, 60px); background: linear-gradient(120deg, #48100e, var(--card) 62%); }
     .contact h2 { max-width: 760px; font-size: clamp(2.9rem, 7vw, 5.2rem); }
     .contact .kicker { color: #ffd2cd; }
     .contact > p { color: #e4e3e6; font-size: 1.12rem; max-width: 560px; margin: 16px 0 26px; }
@@ -371,9 +386,11 @@
     .squad b { font-family: var(--display); font-style: italic; font-size: 1.55rem; font-weight: 800; text-transform: uppercase; line-height: 1.1; }
     .squad .open small { color: var(--legendary); animation: pulse 1.6s infinite; }
     .contact-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .contact-actions .btn { white-space: normal; text-align: center; }
     .copy { position: relative; overflow: visible; }
     .copy.done { background: var(--green); color: #0b0b0d; }
     .socials { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 30px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.14); }
+    .social-link { display: inline-flex; align-items: center; gap: 8px; }
     @media (max-width: 560px) { .squad { grid-template-columns: 1fr; } }
 
     footer { padding: 30px 0 42px; color: var(--muted); font-size: .88rem; }
@@ -469,6 +486,7 @@
         <div class="bars" aria-hidden="true"><div class="bar-shield"></div><div class="bar-health"></div></div>
         <div class="abilities" id="abilities"></div>
         <div class="op-firma"><div class="firma reveal" data-firma></div></div>
+        <div class="quick-socials" id="quickSocials"></div>
       </div>
       <div class="feed" id="feed" aria-hidden="true"></div>
     </div>
@@ -838,9 +856,9 @@ const IA_CASOS = [
 /* ✏️  RAREZAS: legendary, epic o rare. Cambia el color y la etiqueta de cada proyecto */
 const RAREZA = { getpack: "legendary", koli: "legendary", davinci: "epic", piyo: "epic", audit: "epic", ultron: "epic", presente: "rare", jira: "rare", inspiring: "rare" };
 const RAREZAS = {
-  legendary: { color: "var(--legendary)", es: "Legendario", en: "Legendary" },
-  epic: { color: "var(--epic)", es: "Épico", en: "Epic" },
-  rare: { color: "var(--rare)", es: "Raro", en: "Rare" },
+  legendary: { color: "var(--legendary)", es: "Principal", en: "Core" },
+  epic: { color: "var(--epic)", es: "Especializado", en: "Specialized" },
+  rare: { color: "var(--rare)", es: "Complementario", en: "Supporting" },
 };
 
 /* ✏️  CARGAS: "probado" usa los id de PROYECTOS y abre su detalle */
@@ -855,15 +873,15 @@ const CARGAS = [
 
 const TXT = {
   es: {
-    "nav.profile": "Perfil", "nav.projects": "Proyectos", "nav.ai": "IA", "nav.services": "Servicios", "nav.about": "Operador", "nav.cta": "Contrátame",
-    "hero.status": "Listo para desplegar · Empleo y freelance",
+    "nav.profile": "Perfil", "nav.projects": "Proyectos", "nav.ai": "IA", "nav.services": "Servicios", "nav.about": "Sobre mí", "nav.cta": "Contrátame",
+    "hero.status": "Disponible · Empleo y freelance",
     "hero.title1": "Software que sobrevive", "hero.title2": "en producción.",
     "hero.sub": "Soy <strong>Clizco</strong>, o <strong>Abraham Gonzalez</strong> si nos vemos en persona: Full Stack Developer en España. Construyo plataformas web, APIs y apps que empresas reales usan todos los días: logística, flotas de vehículos, pagos y automatización. Y añado IA donde de verdad ahorra tiempo.",
     "hero.cta1": "Contrátame", "hero.cta2": "Ver proyectos",
-    "op.label": "Operador · Full Stack", "op.class": "Especialidad: full stack e IA",
-    "abilities": [["Pasiva", "Auditoría: cada cambio queda registrado", "var(--shield)"], ["Táctica", "Webhook verificado: pagos confirmados en servidor", "var(--epic)"], ["Definitiva", "Deploy: de la idea a producción", "var(--legendary)"]],
+    "op.label": "Perfil · Full Stack", "op.class": "Especialidad: full stack e IA",
+    "abilities": [["Auditoría", "Cada cambio queda registrado", "var(--shield)"], ["Seguridad", "Pagos confirmados mediante webhook verificado", "var(--epic)"], ["Entrega", "Del diseño al despliegue en producción", "var(--legendary)"]],
     "feed": [["Clizco", "desplegó", "Koli"], ["GetPack", "superó", "123 tests"], ["Clizco", "publicó", "express-audit-trail"], ["Presente", "rotó el", "QR cada 20 s"], ["Davinci", "aseguró", "45 permisos"], ["Ultron", "coordinó", "10 agentes"]],
-    "proof": [["Plataformas", "3", "en producción"], ["Escudo", "123", "tests de integración en GetPack"], ["Arsenal", "18", "módulos de API en Koli"], ["Open source", "1", "paquete publicado en npm"]],
+    "proof": [["Plataformas", "3", "en producción"], ["Calidad", "123", "tests de integración en GetPack"], ["Arquitectura", "18", "módulos de API en Koli"], ["Open source", "1", "paquete publicado en npm"]],
     "profile.kicker": "Perfil · 30 segundos", "profile.title": "Qué tipo de programador soy", "profile.sub": "Si solo tienes medio minuto, esto es lo que necesitas saber.", "profile.proof": "Prueba",
     "profile.cards": [["Backend primero, full stack de verdad", "Diseño la base de datos, la API y la seguridad, y también la interfaz que usa tu equipo.", "Koli: API REST con 18 módulos y su panel de operaciones."], ["Lo llevo hasta producción", "No me quedo en la demo: pruebo, despliego y dejo el sistema funcionando para usuarios reales.", "GetPack: 123 tests de integración en CI, con clientes, comercios y conductores."], ["IA con los pies en la tierra", "La uso donde ahorra trabajo real, con controles para que no invente datos ni actúe sola.", "Ultron: una persona aprueba antes de abrir un Pull Request."]],
     "profile.facts": [["Busco", "Empleo o freelance"], ["Dónde", "España · remoto, presencial o híbrido"], ["Idiomas", "Español · Inglés B2+"], ["Programando", "Desde los 15"]],
@@ -872,39 +890,39 @@ const TXT = {
     "ai.rules": "Cómo uso la IA", "ai.rulesList": [["Primero el problema", "Si la IA no te ahorra tiempo o dinero, no la pongo."], ["Una persona decide", "La IA propone. Lo importante lo revisa y aprueba alguien."], ["Tus datos, no inventos", "Siempre que puedo, consulta tus datos antes de responder."]],
     "ai.cta.title": "¿Qué tarea repites cada semana?", "ai.cta.sub": "Cuéntamela y te digo si la IA puede ayudarte. Y si no merece la pena, también te lo digo.", "ai.cta.btn": "Contar mi caso", "ai.cta.subj": "Tengo una tarea que quiero automatizar",
     "doors": [{ k: "Si eres una empresa", t: "Buscas un programador", d: "Me sumo a tu equipo como Full Stack con fuerte base de backend y experiencia en sistemas reales.", i: ["Empleo remoto, presencial o híbrido", "Español e inglés B2+", "Código probado y documentado"], cta: "Hablemos de la vacante", subj: "Tengo una vacante para ti", main: true }, { k: "Si tienes un negocio", t: "Necesitas un sistema", d: "Construyo lo que tu negocio necesita, desde la idea hasta que funciona: plataformas, apps, pagos e IA.", i: ["Alcance, tiempos y costo por escrito", "Avances que puedes probar cada semana", "Despliegue, monitoreo y soporte"], cta: "Cuéntame tu idea", subj: "Hola Clizco, tengo un proyecto" }],
-    "load.kicker": "Stack · Mis cargas", "load.title": "Con qué trabajo", "load.sub": "Según la misión cambio de equipo. Cada carga muestra con qué trabajo y en qué proyectos reales la he usado.",
-    "load.main": "Arma principal", "load.secondary": "Arma secundaria", "load.tested": "Probada en", "load.tab": "Carga",
-    "work.kicker": "Proyectos · Botín", "work.title": "Lo que he construido", "work.sub": "No son ejercicios: son sistemas que hoy mueven paquetes, vehículos y dinero de verdad.",
+    "load.kicker": "Stack · Herramientas", "load.title": "Con qué trabajo", "load.sub": "Elijo las herramientas según el problema. Aquí puedes ver qué uso y en qué proyectos reales lo he aplicado.",
+    "load.main": "Tecnología principal", "load.secondary": "Tecnología secundaria", "load.tested": "Usada en", "load.tab": "Área",
+    "work.kicker": "Proyectos", "work.title": "Lo que he construido", "work.sub": "No son ejercicios: son sistemas que hoy mueven paquetes, vehículos y dinero de verdad.",
     "work.fav": "Mi mayor orgullo", "work.more": "Más proyectos", "work.view": "Ver caso completo", "work.details": "Ver detalles",
     "m.highlights": "Lo más destacado", "m.stack": "Tecnologías", "m.apps": "Una plataforma, varias apps",
     "svc.kicker": "Servicios · Habilidades", "svc.title": "En qué te puedo ayudar", "svc.all": "Todo lo que puedo hacer", "svc.sub": "De la idea al sistema en producción, con código limpio, pruebas y documentación.",
-    "svc.kinds": ["Definitiva", "Táctica", "Táctica", "Pasiva", "Pasiva", "Pasiva"],
-    "about.kicker": "Operador", "about.title": "Soy Clizco.",
+    "svc.kinds": ["Principal", "Backend", "Producto", "Automatización", "Integraciones", "Operaciones"],
+    "about.kicker": "Sobre mí", "about.title": "Soy Clizco.",
     "about.p1": "Soy <strong>Clizco</strong>, o <strong>Abraham Gonzalez</strong>: desarrollador Full Stack en España, especializado en <strong>inteligencia artificial, integración de LLMs y aplicaciones escalables</strong>. Programo desde los 15, cuando <strong>mi padre</strong> me introdujo a esto.",
     "about.p2": "Actualmente construyo soluciones empresariales con <strong>Java, Spring Boot, Node.js, React y TypeScript</strong>, y uso la IA de OpenAI para automatizar procesos, analizar documentos y optimizar flujos de trabajo.",
     "about.p3": "He desarrollado <strong>Davinci</strong>, un sistema de gestión de activos con visión artificial, y <strong>Piyo</strong>, que procesa facturas con IA para reducir el trabajo manual. El proyecto del que más orgulloso estoy es <strong>GetPack</strong>: una plataforma de logística con apps para clientes, comercios y conductores, más su panel de administración, todo en producción.",
     "about.p4": "Disfruto trabajar en todo el ciclo de desarrollo: <strong>arquitectura, diseño de APIs, bases de datos, integración de IA, despliegues en la nube y monitoreo</strong>.",
     "facts": [["Alias", "Clizco"], ["Nombre", "Abraham Gonzalez"], ["Base", "España"], ["Idiomas", "Español · Inglés B2+"], ["Especialidad", "Full stack e IA"], ["Busco", "Empleo o freelance"], ["Modalidad", "Remoto, presencial o híbrido"], ["Programando", "Desde los 15"]],
     "about.p5": "Siempre me interesa colaborar en proyectos innovadores y buscar nuevas formas de aplicar la IA a problemas reales. Y sigo siendo gamer: por eso esta página parece un lobby.",
-    "about.photo": "Operador · Full Stack",
+    "about.photo": "Retrato · Full Stack",
     "proc.kicker": "Fases de la misión", "proc.title": "Cómo trabajo contigo",
-    "steps": [["Aterrizaje", "Hablamos de tu negocio, tus usuarios y qué problema hay que resolver primero."], ["Equipamiento", "Defino arquitectura, alcance, tiempos y costo claros, por escrito."], ["Combate", "Entregas cortas con avances que puedes probar cada semana."], ["Victoria", "Despliegue, monitoreo y soporte para que siga funcionando."]],
-    "contact.kicker": "Contacto · Escuadrón", "contact.title": "Falta un jugador: tú.", "contact.sub": "Cuéntame tu idea o tu vacante y te respondo en menos de 24 horas.",
+    "steps": [["Descubrimiento", "Hablamos de tu negocio, tus usuarios y qué problema hay que resolver primero."], ["Planificación", "Defino arquitectura, alcance, tiempos y costo claros, por escrito."], ["Construcción", "Entregas cortas con avances que puedes probar cada semana."], ["Lanzamiento", "Despliegue, monitoreo y soporte para que siga funcionando."]],
+    "contact.kicker": "Contacto", "contact.title": "Hablemos de tu próximo proyecto.", "contact.sub": "Cuéntame tu idea o tu vacante y te respondo en menos de 24 horas.",
     "squad": [["Listo", "Clizco"], ["Plaza libre", "Tú"], ["Plaza libre", "Tu equipo"]],
     "contact.email": "Escríbeme por correo", "contact.copy": "Copiar correo", "contact.copied": "¡Copiado!", "contact.cv": "Descargar CV",
     "mail.subject": "Hola Abraham, tengo un proyecto",
     "footer": "// Deploy completado", "rights": "Todos los derechos reservados.",
   },
   en: {
-    "nav.profile": "Profile", "nav.projects": "Projects", "nav.ai": "AI", "nav.services": "Services", "nav.about": "Operator", "nav.cta": "Hire me",
-    "hero.status": "Ready to deploy · Jobs and freelance",
+    "nav.profile": "Profile", "nav.projects": "Projects", "nav.ai": "AI", "nav.services": "Services", "nav.about": "About", "nav.cta": "Hire me",
+    "hero.status": "Available · Jobs and freelance",
     "hero.title1": "Software that survives", "hero.title2": "production.",
     "hero.sub": "I'm <strong>Clizco</strong>, or <strong>Abraham Gonzalez</strong> when we meet in person: a Full Stack Developer based in Spain. I build web platforms, APIs and apps that real businesses use every day: logistics, vehicle fleets, payments and automation. And I add AI where it actually saves time.",
     "hero.cta1": "Hire me", "hero.cta2": "See projects",
-    "op.label": "Operator · Full Stack", "op.class": "Specialty: full stack and AI",
-    "abilities": [["Passive", "Audit trail: every change gets recorded", "var(--shield)"], ["Tactical", "Verified webhook: payments confirmed server-side", "var(--epic)"], ["Ultimate", "Deploy: from idea to production", "var(--legendary)"]],
+    "op.label": "Profile · Full Stack", "op.class": "Specialty: full stack and AI",
+    "abilities": [["Auditability", "Every change gets recorded", "var(--shield)"], ["Security", "Payments confirmed through a verified webhook", "var(--epic)"], ["Delivery", "From design to production deployment", "var(--legendary)"]],
     "feed": [["Clizco", "deployed", "Koli"], ["GetPack", "passed", "123 tests"], ["Clizco", "published", "express-audit-trail"], ["Presente", "rotated the", "QR every 20 s"], ["Davinci", "secured", "45 permissions"], ["Ultron", "coordinated", "10 agents"]],
-    "proof": [["Platforms", "3", "in production"], ["Shield", "123", "integration tests in GetPack"], ["Arsenal", "18", "API modules in Koli"], ["Open source", "1", "package published on npm"]],
+    "proof": [["Platforms", "3", "in production"], ["Quality", "123", "integration tests in GetPack"], ["Architecture", "18", "API modules in Koli"], ["Open source", "1", "package published on npm"]],
     "profile.kicker": "Profile · 30 seconds", "profile.title": "What kind of developer I am", "profile.sub": "If you only have half a minute, this is what you need to know.", "profile.proof": "Proof",
     "profile.cards": [["Backend first, truly full stack", "I design the database, the API and the security, and also the interface your team uses.", "Koli: a REST API with 18 modules and its operations dashboard."], ["I take it all the way to production", "I don't stop at the demo: I test, deploy and leave the system running for real users.", "GetPack: 123 integration tests in CI, serving customers, merchants and drivers."], ["Down-to-earth AI", "I use it where it saves real work, with controls so it doesn't make data up or act alone.", "Ultron: a person approves before a Pull Request is opened."]],
     "profile.facts": [["Looking for", "A job or freelance work"], ["Where", "Spain · remote, on-site or hybrid"], ["Languages", "Spanish · English B2+"], ["Coding", "Since age 15"]],
@@ -913,24 +931,24 @@ const TXT = {
     "ai.rules": "How I use AI", "ai.rulesList": [["The problem comes first", "If AI won't save you time or money, I don't add it."], ["A person decides", "AI proposes. Someone reviews and approves what matters."], ["Your data, not made-up data", "Whenever possible, it checks your data before answering."]],
     "ai.cta.title": "What task do you repeat every week?", "ai.cta.sub": "Tell me about it and I'll say whether AI can help. And if it isn't worth it, I'll tell you that too.", "ai.cta.btn": "Share my case", "ai.cta.subj": "I have a task I want to automate",
     "doors": [{ k: "If you're a company", t: "You need a developer", d: "I join your team as a Full Stack developer with a strong backend base and experience in real systems.", i: ["Remote, on-site or hybrid", "Spanish and English B2+", "Tested, documented code"], cta: "Let's talk about the role", subj: "I have an open role for you", main: true }, { k: "If you run a business", t: "You need a system", d: "I build what your business needs, from the idea until it works: platforms, apps, payments and AI.", i: ["Scope, timeline and cost in writing", "Progress you can try every week", "Deployment, monitoring and support"], cta: "Tell me your idea", subj: "Hi Clizco, I have a project" }],
-    "load.kicker": "Stack · My loadouts", "load.title": "What I work with", "load.sub": "The mission decides the gear. Each loadout shows what I work with and the real projects where I've used it.",
-    "load.main": "Primary weapon", "load.secondary": "Secondary weapon", "load.tested": "Field-tested in", "load.tab": "Loadout",
-    "work.kicker": "Projects · Loot", "work.title": "What I've built", "work.sub": "Not exercises: systems that move real packages, vehicles and money today.",
+    "load.kicker": "Stack · Tools", "load.title": "What I work with", "load.sub": "I choose the tools according to the problem. Here you can see what I use and the real projects where I've applied it.",
+    "load.main": "Primary technology", "load.secondary": "Secondary technology", "load.tested": "Used in", "load.tab": "Area",
+    "work.kicker": "Projects", "work.title": "What I've built", "work.sub": "Not exercises: systems that move real packages, vehicles and money today.",
     "work.fav": "My proudest build", "work.more": "More projects", "work.view": "Read the case study", "work.details": "View details",
     "m.highlights": "Highlights", "m.stack": "Tech stack", "m.apps": "One platform, several apps",
     "svc.kicker": "Services · Abilities", "svc.title": "How I can help", "svc.all": "Everything I can do", "svc.sub": "From idea to a production system, with clean code, tests and documentation.",
-    "svc.kinds": ["Ultimate", "Tactical", "Tactical", "Passive", "Passive", "Passive"],
-    "about.kicker": "Operator", "about.title": "I'm Clizco.",
+    "svc.kinds": ["Core", "Backend", "Product", "Automation", "Integrations", "Operations"],
+    "about.kicker": "About me", "about.title": "I'm Clizco.",
     "about.p1": "I'm <strong>Clizco</strong>, or <strong>Abraham Gonzalez</strong>: a Full Stack Developer in Spain, specialized in <strong>artificial intelligence, LLM integration and scalable applications</strong>. I've been coding since I was 15, when <strong>my father</strong> introduced me to it.",
     "about.p2": "I currently build enterprise solutions with <strong>Java, Spring Boot, Node.js, React and TypeScript</strong>, and I use OpenAI to automate processes, analyze documents and streamline workflows.",
     "about.p3": "I built <strong>Davinci</strong>, an asset management system with computer vision, and <strong>Piyo</strong>, which processes invoices with AI to cut manual work. The project I'm proudest of is <strong>GetPack</strong>: a logistics platform with apps for customers, merchants and drivers, plus its admin panel, all in production.",
     "about.p4": "I enjoy working across the whole development cycle: <strong>architecture, API design, databases, AI integration, cloud deployments and monitoring</strong>.",
     "facts": [["Alias", "Clizco"], ["Name", "Abraham Gonzalez"], ["Base", "Spain"], ["Languages", "Spanish · English B2+"], ["Specialty", "Full stack & AI"], ["Looking for", "A job or freelance work"], ["Work mode", "Remote, on-site or hybrid"], ["Coding", "Since age 15"]],
     "about.p5": "I'm always interested in collaborating on innovative projects and finding new ways to apply AI to real problems. And I'm still a gamer, which is why this page looks like a lobby.",
-    "about.photo": "Operator · Full Stack",
+    "about.photo": "Portrait · Full Stack",
     "proc.kicker": "Mission phases", "proc.title": "How we'll work together",
-    "steps": [["Landing", "We talk about your business, your users and which problem to solve first."], ["Gearing up", "I define architecture, scope, timeline and cost, in writing."], ["Combat", "Short iterations with progress you can try every week."], ["Victory", "Deployment, monitoring and support so it keeps running."]],
-    "contact.kicker": "Contact · Squad", "contact.title": "One player missing: you.", "contact.sub": "Tell me about your idea or your open role and I'll reply within 24 hours.",
+    "steps": [["Discovery", "We talk about your business, your users and which problem to solve first."], ["Planning", "I define architecture, scope, timeline and cost, in writing."], ["Build", "Short iterations with progress you can try every week."], ["Launch", "Deployment, monitoring and support so it keeps running."]],
+    "contact.kicker": "Contact", "contact.title": "Let's talk about your next project.", "contact.sub": "Tell me about your idea or your open role and I'll reply within 24 hours.",
     "squad": [["Ready", "Clizco"], ["Open slot", "You"], ["Open slot", "Your team"]],
     "contact.email": "Email me", "contact.copy": "Copy email", "contact.copied": "Copied!", "contact.cv": "Download CV",
     "mail.subject": "Hi Abraham, I have a project",
@@ -951,21 +969,21 @@ const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const MOCKS = {
   producto: () => `
     <div class="mk ia-mk">
-      <div class="ia-prod-foto"><svg viewBox="0 0 78 88" aria-hidden="true"><path d="M23 4h32a4 4 0 0 1 4 4l-3 32H22L19 8a4 4 0 0 1 4-4Z" fill="#26262c"/><rect x="16" y="42" width="46" height="9" rx="4" fill="#3a3a42"/><path d="M36 51h6v17h-6z" fill="#77767c"/><path d="M39 68 15 78M39 68l24 10M39 68v14" stroke="#26262c" stroke-width="4" stroke-linecap="round"/><circle cx="14" cy="82" r="4" fill="#111"/><circle cx="64" cy="82" r="4" fill="#111"/><circle cx="39" cy="84" r="4" fill="#111"/></svg><span>${lang === "en" ? "photo.jpg" : "foto.jpg"}</span></div>
+      <div class="ia-prod-foto"><svg viewBox="0 0 78 88" aria-hidden="true"><path d="M23 4h32a4 4 0 0 1 4 4l-3 32H22L19 8a4 4 0 0 1 4-4Z" fill="#26262c"/><rect x="16" y="42" width="46" height="9" rx="4" fill="#3a3a42"/><path d="M36 51h6v17h-6z" fill="#77767c"/><path d="M39 68 15 78M39 68l24 10M39 68v14" stroke="#26262c" stroke-width="4" stroke-linecap="round"/><circle cx="14" cy="82" r="4" fill="#111"/><circle cx="64" cy="82" r="4" fill="#111"/><circle cx="39" cy="84" r="4" fill="#111"/></svg><span>${lang === "en" ? "Detected product" : "Producto detectado"}</span></div>
       <div class="ia-flecha">➜</div>
-      <div class="ia-json"><div><small>name</small>${lang === "en" ? "Office chair" : "Silla de oficina"}</div><div><small>tags</small>${lang === "en" ? "office, chair" : "oficina, silla"}</div><div><small>price_new</small>100 USD</div><div><small>price_used</small>60 USD</div></div>
+      <div class="ia-json"><div><small>name</small>${lang === "en" ? "Detected product" : "Producto detectado"}</div><div><small>tags</small>${lang === "en" ? "category, condition" : "categoría, estado"}</div><div><small>price_new</small>${lang === "en" ? "Suggested" : "Sugerido"}</div><div><small>price_used</small>${lang === "en" ? "Suggested" : "Sugerido"}</div></div>
     </div>`,
   factura: () => `
     <div class="mk ia-mk">
-      <div class="ia-papel"><b>${lang === "en" ? "Example Hardware" : "Ferretería Ejemplo"}</b><span>${lang === "en" ? "Invoice" : "Factura"} FAC-0042</span><i></i><i></i><i></i><span>Total USD 107.00</span></div>
+      <div class="ia-papel"><b>${lang === "en" ? "Local business" : "Comercio local"}</b><span>${lang === "en" ? "Invoice" : "Factura"} · OCR</span><i></i><i></i><i></i><span>${lang === "en" ? "Structured data" : "Datos estructurados"}</span></div>
       <div class="ia-flecha">➜</div>
-      <div class="ia-json"><div><small>invoice_number</small>FAC-0042</div><div><small>company_name</small>${lang === "en" ? "Example Hardware" : "Ferretería Ejemplo"}</div><div><small>subtotal</small>100.00</div><div><small>itbms</small>7.00</div><div><small>total</small>107.00</div></div>
+      <div class="ia-json"><div><small>invoice_number</small>${lang === "en" ? "Extracted" : "Extraído"}</div><div><small>company_name</small>${lang === "en" ? "Detected" : "Detectado"}</div><div><small>subtotal</small>${lang === "en" ? "Extracted" : "Extraído"}</div><div><small>taxes</small>${lang === "en" ? "Extracted" : "Extraído"}</div><div><small>total</small>${lang === "en" ? "Calculated" : "Calculado"}</div></div>
     </div>`,
   tienda: () => `
     <div class="mk ia-chat">
       <div class="yo">${lang === "en" ? "Do you have cordless drills?" : "¿Tienen taladros inalámbricos?"}</div>
       <div class="bot">${lang === "en" ? "Yes, I found this option in the store:" : "Sí, encontré esta opción en la tienda:"}</div>
-      <div class="prod"><span class="foto"></span><div><b>${lang === "en" ? "20V drill (example)" : "Taladro 20V (ejemplo)"}</b><small>USD 89.00 · ${lang === "en" ? "Available" : "Disponible"}</small></div></div>
+      <div class="prod"><span class="foto"></span><div><b>${lang === "en" ? "Cordless drill" : "Taladro inalámbrico"}</b><small>${lang === "en" ? "Product data found" : "Datos del producto encontrados"}</small></div></div>
     </div>`,
   getpack: () => `
     <div class="mk row float" style="justify-content:center;align-items:center;gap:16px">
@@ -1023,7 +1041,7 @@ const MOCKS = {
   <span style="color:#ff6b8b">"action"</span>: <span style="color:#9be564">"UPDATE"</span>,
   <span style="color:#ff6b8b">"entityType"</span>: <span style="color:#9be564">"VEHICLES"</span>,
   <span style="color:#ff6b8b">"changes"</span>: { <span style="color:#ff6b8b">"status"</span>: <span style="color:#9be564">"in_workshop"</span> },
-  <span style="color:#ff6b8b">"actor"</span>: { <span style="color:#ff6b8b">"email"</span>: <span style="color:#9be564">"ana@example.com"</span> },
+  <span style="color:#ff6b8b">"actor"</span>: { <span style="color:#ff6b8b">"id"</span>: <span style="color:#9be564">"user-42"</span> },
   <span style="color:#ff6b8b">"password"</span>: <span style="color:#8d8b9b">[REDACTED]</span>,
   <span style="color:#ff6b8b">"statusCode"</span>: <span style="color:#ffb547">200</span>
 }</div>
@@ -1052,7 +1070,7 @@ const MOCKS = {
     </div>`;
   },
   ultron: () => {
-    const agents = ["backend", "frontend", "qa", "db", "ux", "security", "devops", "release"];
+    const agents = ["backend", "frontend", "qa", "db", "ux", "ui", "security", "devops", "pr", "release"];
     const pts = agents.map((a, i) => { const ang = (i / agents.length) * Math.PI * 2 - Math.PI / 2; return [a, 160 + Math.cos(ang) * 120, 100 + Math.sin(ang) * 72]; });
     return `
     <svg class="mk float" viewBox="0 0 320 200" style="max-width:420px;font-family:var(--mono)">
@@ -1094,9 +1112,15 @@ const rarOf = (p) => RAREZAS[RAREZA[p.id] || "rare"];
 const rarityHTML = (p) => `<span class="rarity"><b>${esc(L(rarOf(p)))}</b>${esc(L(p.estado))}${p.favorito ? `<em class="fav">★ ${t("work.fav")}</em>` : ""}</span>`;
 const appsHTML = (p) => (p.apps?.length ? `<div class="apps">${p.apps.map((a) => `<div class="app cut"><b>${esc(L(a))}</b><span>${esc(L(a.d))}</span></div>`).join("")}</div>` : "");
 const linksHTML = (p) => p.links.map((l, i) => `<a class="link ${i === 0 ? "solid" : ""}" href="${esc(l.url)}" target="_blank" rel="noopener">${esc(L(l))} ↗</a>`).join("");
+const socialIcon = (name) => {
+  const key = name.toLowerCase();
+  if (key === "github") return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5a9.5 9.5 0 0 0-3 18.51c.48.09.65-.21.65-.46v-1.68c-2.65.58-3.21-1.12-3.21-1.12-.44-1.1-1.07-1.39-1.07-1.39-.87-.6.07-.59.07-.59.96.07 1.47.99 1.47.99.86 1.47 2.25 1.05 2.8.8.09-.62.34-1.05.61-1.29-2.12-.24-4.35-1.06-4.35-4.72 0-1.04.37-1.89.98-2.56-.1-.24-.43-1.21.09-2.52 0 0 .8-.26 2.62.98A9.1 9.1 0 0 1 12 7.9c.81 0 1.63.11 2.39.34 1.82-1.24 2.62-.98 2.62-.98.52 1.31.19 2.28.09 2.52.61.67.98 1.52.98 2.56 0 3.67-2.23 4.48-4.36 4.72.35.3.65.87.65 1.76v2.61c0 .25.17.55.66.46A9.5 9.5 0 0 0 12 2.5Z"/></svg>';
+  if (key === "linkedin") return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.2 8.3H2.7V21h2.5V8.3ZM4 3a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3ZM21.3 13.7c0-3.83-2.04-5.62-4.76-5.62-2.2 0-3.18 1.21-3.73 2.06V8.3h-2.5V21h2.5v-6.3c0-1.66.31-3.27 2.37-3.27 2.03 0 2.06 1.9 2.06 3.38V21h2.5l.01-7.3Z"/></svg>';
+  return "";
+};
 const WEAPONS = {
-  main: '<svg viewBox="0 0 240 80" aria-hidden="true"><path d="M6 32 58 30 68 20H150L160 30H234V38H172V47H122L110 72H86L96 47H60L30 64H8L20 47H6Z"/><path d="M84 12H136V17H84Z"/></svg>',
-  secondary: '<svg viewBox="0 0 240 80" aria-hidden="true"><path d="M46 22H186L196 31V43H124L116 72H90L98 43H46Z"/><path d="M196 33H216V39H196Z"/></svg>',
+  main: '<svg viewBox="0 0 240 80" aria-hidden="true"><path d="M28 18h184v10H28zM28 35h124v10H28zM28 52h166v10H28z"/><circle cx="216" cy="23" r="6"/><circle cx="168" cy="40" r="6"/><circle cx="208" cy="57" r="6"/></svg>',
+  secondary: '<svg viewBox="0 0 240 80" aria-hidden="true"><rect x="28" y="16" width="184" height="48" rx="8"/><path d="M48 30h68v8H48zM48 45h108v8H48z"/><circle cx="188" cy="34" r="6" fill="var(--card)"/><circle cx="188" cy="50" r="6" fill="var(--card)"/></svg>',
 };
 let carga = 0;
 
@@ -1179,7 +1203,9 @@ function renderStatic() {
     (mail ? `<a class="btn btn-primary" href="${mail}">${t("contact.email")}</a><button class="btn btn-ghost copy" id="copyBtn">${t("contact.copy")}</button>` : "") +
     (PERFIL.whatsapp ? `<a class="btn btn-ghost" href="https://wa.me/${esc(PERFIL.whatsapp)}" target="_blank" rel="noopener">WhatsApp ↗</a>` : "") +
     (PERFIL.cv ? `<a class="btn btn-ghost" href="${esc(PERFIL.cv)}" download>${t("contact.cv")}</a>` : "");
-  $("#socials").innerHTML = PERFIL.redes.filter((r) => r.url).map((r) => `<a class="link" href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.nombre)} ↗</a>`).join("");
+  const redes = PERFIL.redes.filter((r) => r.url);
+  $("#quickSocials").innerHTML = redes.filter((r) => ["github", "linkedin"].includes(r.nombre.toLowerCase())).map((r) => `<a class="quick-social" href="${esc(r.url)}" target="_blank" rel="noopener" aria-label="${esc(r.nombre)}">${socialIcon(r.nombre)}<span>${esc(r.nombre)}</span></a>`).join("");
+  $("#socials").innerHTML = redes.map((r) => `<a class="link social-link" href="${esc(r.url)}" target="_blank" rel="noopener" aria-label="${esc(r.nombre)}">${socialIcon(r.nombre)}<span>${esc(r.nombre)} ↗</span></a>`).join("");
 
   observe();
 }
