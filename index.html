@@ -107,9 +107,7 @@
     .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 
     .op { background: rgba(16,16,19,.94); border: 1px solid var(--line); --k: 22px; }
-    .op-top { display: grid; grid-template-columns: 92px 1fr; gap: 18px; padding: 24px 24px 18px; align-items: center; }
-    .op-emblem { width: 92px; height: 104px; display: grid; place-items: center; background: linear-gradient(150deg, var(--red-hi), #7a120e); clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); font-family: var(--display); font-style: italic; font-weight: 800; font-size: 2.7rem; }
-    .op-emblem img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .op-top { display: block; padding: 24px 24px 18px; }
     .op-label { font-family: var(--hud); font-size: .72rem; letter-spacing: 1.2px; color: var(--red-hi); font-weight: 700; text-transform: uppercase; }
     .op-name { font-family: var(--display); font-style: italic; font-weight: 800; font-size: 2.3rem; line-height: 1; text-transform: uppercase; margin: 2px 0 4px; }
     .op-class { color: var(--muted); font-size: .93rem; }
@@ -156,8 +154,7 @@
     @keyframes feedin { from { opacity: 0; transform: translateX(16px); } }
     @media (max-width: 960px) { .hero .wrap { grid-template-columns: 1fr; gap: 40px; } .hero { padding-top: 48px; } .hero::before { width: 90%; opacity: .5; } }
     @media (max-width: 420px) {
-      .op-top { grid-template-columns: 72px minmax(0, 1fr); gap: 12px; padding: 20px 16px 16px; }
-      .op-emblem { width: 72px; height: 84px; font-size: 2.2rem; }
+      .op-top { padding: 20px 16px 16px; }
       .ability { grid-template-columns: 78px minmax(0, 1fr); padding-inline: 16px; }
       .op-firma { padding-inline: 16px; }
       .quick-socials { padding-inline: 16px; }
@@ -216,6 +213,8 @@
     /* ---------- PROYECTOS ---------- */
     .featured { display: grid; gap: 30px; }
     .feat { --k: 26px; display: grid; grid-template-columns: 1.1fr 1fr; background: var(--card); position: relative; }
+    .feat[data-open] { cursor: pointer; }
+    .feat[data-open]:focus-visible { outline: 2px solid var(--red-hi); outline-offset: 4px; }
     .feat::after, .card::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: var(--c); }
     .feat:nth-child(even) .feat-visual { order: 2; }
     .feat-visual { min-height: 380px; padding: 38px; display: grid; place-items: center; background: linear-gradient(150deg, color-mix(in srgb, var(--c) 20%, var(--card-2)), var(--card-2) 62%); overflow: hidden; }
@@ -475,7 +474,6 @@
     <div>
       <div class="op cut">
         <div class="op-top">
-          <div class="op-emblem" aria-hidden="true"><img src="img/clizco-avatar.webp" alt="" /></div>
           <div>
             <div class="op-label" data-t="op.label"></div>
             <div class="op-name">Clizco</div>
@@ -680,7 +678,7 @@ const PROYECTOS = [
       en: ["123 integration tests against a real MariaDB, run in CI on every push", "Yappy payments confirmed only through a verified server-side webhook", "Coverage zones drawn as map polygons that drive delivery pricing", "Real-time support chat, 7 background jobs and self-hosted OTA updates", "Custom migration runner with per-file transactions and checksums", "Store AI: an AI product assistant for each store"],
     },
     stack: ["Node.js", "Express", "MariaDB", "Socket.io", "React", "TypeScript", "Capacitor", "Firebase", "Docker"],
-    links: [{ es: "Código y caso completo", en: "Code & write-up", url: "https://github.com/Clizco/admin-get" }, { es: "Portal de comercios", en: "Merchant portal", url: "https://comercial.getpack.net/" }],
+    links: [{ es: "Código", en: "Code", url: "https://github.com/Clizco/admin-get" }, { es: "Portal en vivo", en: "Live portal", url: "https://getpack.com.pa/" }],
   },
   {
     id: "koli", destacado: true, mock: "koli",
@@ -1154,7 +1152,7 @@ function renderStatic() {
   $("#inventory").innerHTML = STACK.map((g) => `<div style="--c:${g.c}"><h4>${esc(g.t)}</h4><p>${g.i.map(esc).join(" · ")}</p></div>`).join("");
 
   $("#featured").innerHTML = PROYECTOS.filter((p) => p.destacado).map((p) => `
-    <article class="feat cut reveal" style="--c:${rarOf(p).color}">
+    <article class="feat cut reveal" data-open="${p.id}" role="button" tabindex="0" aria-label="${esc(p.titulo)}: ${t("work.details")}" style="--c:${rarOf(p).color}">
       <div class="feat-visual" aria-hidden="true">${visual(p)}${p.mosaico ? `<div class="shots ${p.mosaicoAncho ? "wide" : ""}">${p.mosaico.map((s) => `<img src="${esc(s)}" alt="" loading="lazy" />`).join("")}</div>` : ""}</div>
       <div class="feat-body">
         ${rarityHTML(p)}
@@ -1163,7 +1161,7 @@ function renderStatic() {
         ${appsHTML(p)}
         <ul class="feat-list">${L(p.puntos).slice(0, p.apps ? 3 : 4).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
         <div class="tags">${p.stack.map((s) => `<span class="tag">${esc(s)}</span>`).join("")}</div>
-        <div class="links">${linksHTML(p)}<button class="link" data-open="${p.id}">${t("work.view")}</button></div>
+        <div class="links">${linksHTML(p)}</div>
       </div>
     </article>`).join("");
 
@@ -1254,7 +1252,7 @@ modal.addEventListener("click", (e) => { if (e.target === modal) modal.close(); 
 /* ---------------------------- eventos ---------------------------- */
 document.addEventListener("click", (e) => {
   const open = e.target.closest("[data-open]");
-  if (open) return openProject(open.dataset.open);
+  if (open && !e.target.closest("a")) return openProject(open.dataset.open);
   const thumb = e.target.closest("[data-thumb]");
   if (thumb) {
     $("#mVisual img").src = thumb.dataset.thumb;
@@ -1274,6 +1272,13 @@ document.addEventListener("click", (e) => {
     return;
   }
   if (e.target.closest(".menu a")) closeMenu();
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Enter" && e.key !== " ") return;
+  const open = e.target.closest("[data-open]");
+  if (!open || e.target.closest("a")) return;
+  e.preventDefault();
+  openProject(open.dataset.open);
 });
 
 const nav = $("#nav"), burger = $("#burger"), shieldBar = $("#shieldBar");
